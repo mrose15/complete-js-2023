@@ -585,10 +585,22 @@ const options = {
   //useGrouping: false,
 };
 
-console.log("US: ", new Intl.NumberFormat("en-US", options).format(num));
+/*console.log("US: ", new Intl.NumberFormat("en-US", options).format(num));
 console.log("Germany: ", new Intl.NumberFormat("de-DE", options).format(num));
 console.log("Syria: ", new Intl.NumberFormat("ar-SY", options).format(num));
 console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language, options).format(num)
+);*/
+
+/* 
+  180. Timers: setTimeout and setInterval
+*/
+//async JS
+setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
+  3000,
+  "olives",
+  "spinach"
 );
+console.log("Waiting...");
