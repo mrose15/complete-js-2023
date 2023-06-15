@@ -91,12 +91,6 @@ const formatMovementDate = function (date, locale) {
   if (daysPassed === 1) return "Yesterday";
   if (daysPassed <= 7) return `${daysPassed} days ago`;
 
-  /*
-    const day = `${date.getDate()}`.padStart(2, 0); // 2 chars long
-    const month = `${date.getMonth() + 1}`.padStart(2, 0); // 2 chars long
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  */
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
@@ -182,14 +176,43 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    // In each call, print the remaining time to the user interface
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When the time is at 0, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+
+    // decrease one second
+    time--;
+  };
+
+  // Set time to five minutes
+  let time = 30;
+
+  // Call timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+};
+
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
 
 // fake always logged in
+/* 
 currentAccount = account1;
 updateUI(currentAccount);
-containerApp.style.opacity = 100;
+containerApp.style.opacity = 100; 
+*/
 
 btnLogin.addEventListener("click", function (e) {
   // Prevent form from submitting
@@ -226,6 +249,8 @@ btnLogin.addEventListener("click", function (e) {
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur();
+
+    startLogOutTimer();
 
     // Update UI
     updateUI(currentAccount);
@@ -597,6 +622,19 @@ const pizzaTimer = setTimeout(
   3000,
   ...ingredients
 );
-console.log("Waiting...");
+//console.log("Waiting...");
 
-if (ingredients.includes("spinach")) clearTimeout(pizzaTimer);
+//if (ingredients.includes("spinach")) clearTimeout(pizzaTimer);
+
+// setTimeout
+/*
+setInterval(function () {
+  const now = new Date();
+  const hour = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+  // console.log(future.getMinutes());
+  // console.log(future.getSeconds());
+  console.log(`${hour}:${minutes}:${seconds}`);
+}, 1000);
+*/
