@@ -29,3 +29,50 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+
+/* Selecting, Creating, Deleting, Elements */
+console.log(document.documentElement);
+console.log(document.head);
+console.log(document.body);
+
+const header = document.querySelector(".header");
+
+// returns a node list, does not update on DOM change
+const allSections = document.querySelectorAll(".section");
+console.log(allSections);
+
+document.getElementById("section--1");
+
+// returns html collection, updates when the dom updates (ie: element is deleted)
+const buttons = document.getElementsByTagName("button");
+console.log(buttons);
+
+console.log(document.getElementsByClassName("btn"));
+
+// creating and inserting elements
+//create DOM object
+const message = document.createElement("div");
+message.classList.add("cookie-message");
+//message.textContent = 'We use cookies for improved functionality and analytics.'
+message.innerHTML =
+  "We use cookies for improved functionality and analytics. <button class='btn btn--close-cookie'>Got It!</button>";
+
+//header.prepend(message);
+header.append(message);
+//header.append(message.cloneNode(true));
+
+//header.before(message);
+//header.after(message);
+
+// Delete elements
+document
+  .querySelector(".btn--close-cookie")
+  .addEventListener("click", function () {
+    //message.remove();
+    //dom traversing
+    message.parentElement.removeChild(message);
+  });
