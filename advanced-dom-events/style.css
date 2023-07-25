@@ -100,11 +100,6 @@ p {
   color: #666;
 }
 
-/* This is BAD for accessibility! Don't do in the real world! */
-button:focus {
-  outline: none;
-}
-
 img {
   transition: filter 0.5s;
 }
@@ -667,8 +662,14 @@ h4 {
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  background-color: white;
+  background-color: rgb(55, 56, 61);
   color: #bbb;
   font-size: 1.5rem;
   font-weight: 400;
+}
+
+/* UTILITY CLASSES */
+.full-bleed {
+  box-shadow: 0 0 0 100vmax rgb(55, 56, 61);
+  clip-path: inset(0 -100vmax);
 }
