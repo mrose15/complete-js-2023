@@ -30,6 +30,8 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+//Page navigation
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -175,8 +177,5 @@ document.querySelector('.nav').addEventListener('click', function(e){
   console.log('NAV', e.target, e.currentTarget);
 }); // can add 3rd param here (boolean) this is a use capture boolean, capturing goes down the dom from top level is DOM tree, it reverses the event listener, this event is now the first to fire
 */
-
-/* 192. event delegation: implementing page navigation */
-
 
 
