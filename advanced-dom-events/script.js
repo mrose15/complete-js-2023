@@ -154,9 +154,9 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1 + min
 // + 1 was added when using Math.trunc, because you'd never get a number at the max value, +1 was to offset the cutting off of the decimal. Not sure it's needed when using floor or ceil
 // if we add the minimum value to all of this, then we get a number somewhere between min and max, minus min plus min
 // we can cancel the minus min plus min part of the equation, and we end up with a range between the minimum and max value that we specified
-const randomColor = () => `rgb(${randomInt(0,255)}, ${randomInt(0,255)}, ${randomInt(0,255)})`;
+//const randomColor = () => `rgb(${randomInt(0,255)}, ${randomInt(0,255)}, ${randomInt(0,255)})`;
 
-document.querySelector('.nav__link').addEventListener('click', function(e){
+/*document.querySelector('.nav__link').addEventListener('click', function(e){
   this.style.backgroundColor = randomColor();
   console.log('LINK', e.target, e.currentTarget);
   console.log(e.currentTarget === this);
@@ -174,5 +174,9 @@ document.querySelector('.nav').addEventListener('click', function(e){
   this.style.backgroundColor = randomColor();
   console.log('NAV', e.target, e.currentTarget);
 }); // can add 3rd param here (boolean) this is a use capture boolean, capturing goes down the dom from top level is DOM tree, it reverses the event listener, this event is now the first to fire
+*/
+
+/* 192. event delegation: implementing page navigation */
+
 
 
