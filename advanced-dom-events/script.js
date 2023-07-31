@@ -157,5 +157,22 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1 + min
 const randomColor = () => `rgb(${randomInt(0,255)}, ${randomInt(0,255)}, ${randomInt(0,255)})`;
 
 document.querySelector('.nav__link').addEventListener('click', function(e){
-  console.log('Link');
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  console.log(e.currentTarget === this);
+
+  // in practice, not a good idea, can be used with many handler and many events
+  //e.stopPropagation();
 });
+
+document.querySelector('.nav__links').addEventListener('click', function(e){
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, e.currentTarget);
+});
+
+document.querySelector('.nav').addEventListener('click', function(e){
+  this.style.backgroundColor = randomColor();
+  console.log('NAV', e.target, e.currentTarget);
+}); // can add 3rd param here (boolean) this is a use capture boolean, capturing goes down the dom from top level is DOM tree, it reverses the event listener, this event is now the first to fire
+
+
