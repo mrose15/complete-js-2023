@@ -122,3 +122,40 @@ btnScrollTo.addEventListener("click", function (e) {
   // new way
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+/* 189. type of events and event handlers */
+/*
+const h1 = document.querySelector('h1');
+
+const alertH1 = function(e){
+  alert('addEventListener: Great! You are reading the heading :D');
+}
+*/
+
+/* allows us to add multiple event listeners to the same event and can remove eventhandler if we don't need it anymore*/
+/*
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+*/
+
+/* old way 
+h1.onmouseenter = function(e){
+  alert('onmouseenter: Great! You are reading the heading :D');
+};
+*/
+
+/* 191. event propagation in practice */
+// rgb(255, 255, 255)
+
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1 + min);
+// random gives us a number between 0 and 1
+// if we multiply this number by max minus min, then we get a number between zero and max minus min
+// + 1 was added when using Math.trunc, because you'd never get a number at the max value, +1 was to offset the cutting off of the decimal. Not sure it's needed when using floor or ceil
+// if we add the minimum value to all of this, then we get a number somewhere between min and max, minus min plus min
+// we can cancel the minus min plus min part of the equation, and we end up with a range between the minimum and max value that we specified
+const randomColor = () => `rgb(${randomInt(0,255)}, ${randomInt(0,255)}, ${randomInt(0,255)})`;
+
+document.querySelector('.nav__link').addEventListener('click', function(e){
+  console.log('Link');
+});
