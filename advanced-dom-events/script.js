@@ -7,6 +7,9 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+///////////////////////////////////////
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,7 +33,31 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+//Button Scrolling
+btnScrollTo.addEventListener("click", function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  //old shool way
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: "smooth",
+  // });
+
+  // new way
+  section1.scrollIntoView({ behavior: "smooth" });
+});
+
+///////////////////////////////////////
 //Page navigation
+document.querySelectorAll('.nav__link').forEach(function(el){
+  el.addEventListener('click', function(e){
+    e.preventDefault();
+    const id = this.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+
 
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -98,32 +125,6 @@ logo.classList.contains("c"); // not includes like it is in arrays
 
 // don't use b/c will override current classes
 logo.className = "jonas";
-
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-
-btnScrollTo.addEventListener("click", function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  //console.log(s1coords);
-
-  //console.log(`button element`);
-  //console.log(e.target.getBoundingClientRect());
-
-  //console.log("Current scroll (X/Y)", window.scrollX, window.scrollY);
-
-  //console.log(s1coords.top + window.scrollY);
-
-  //Scrolling
-  //old shool way
-  // window.scrollTo({
-  //   left: s1coords.left + window.scrollX,
-  //   top: s1coords.top + window.scrollY,
-  //   behavior: "smooth",
-  // });
-
-  // new way
-  section1.scrollIntoView({ behavior: "smooth" });
-});
 
 /* 189. type of events and event handlers */
 /*
