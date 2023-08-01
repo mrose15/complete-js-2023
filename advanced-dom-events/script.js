@@ -195,4 +195,43 @@ document.querySelector('.nav').addEventListener('click', function(e){
 }); // can add 3rd param here (boolean) this is a use capture boolean, capturing goes down the dom from top level is DOM tree, it reverses the event listener, this event is now the first to fire
 */
 
+// 193. Dom Traversing
+const h1 = document.querySelector('h1');
 
+// going downwards: child elements
+console.log(h1.querySelectorAll('.highlight'));
+
+//nodes can be anything, even comments
+console.log(h1.childNodes);
+
+//only gets HTML elements, works only for direct children
+console.log(h1.children);
+
+h1.firstElementChild.style.color = '#072185 ';
+h1.lastElementChild.style.color = 'purple';
+
+//Going upwards: parents
+console.log(h1.parentNode); // direct parents, similar to childNodes
+console.log(h1.parentElement);
+
+// used a lot for event delegation
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+//if we're looking for the closest h1, we're going to get the selected element returned
+h1.closest('h1').style.background = 'var(--gradient-secondary)';
+
+// Going sideways selecting siblings
+// can only access direct siblings
+console.log(h1.previousElementSibling); //null
+console.log(h1.nextElementSibling);
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+console.log(h1.parentElement.children); //includes h1
+
+//HTMLCollection, not an array, but still an iterable that we can spread into an array
+[...h1.parentElement.children].forEach(function(el){
+  if(el !== h1){
+    el.style.transform = 'scale(0.5)';
+  }
+})
