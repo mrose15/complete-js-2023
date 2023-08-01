@@ -49,12 +49,28 @@ btnScrollTo.addEventListener("click", function (e) {
 
 ///////////////////////////////////////
 //Page navigation
-document.querySelectorAll('.nav__link').forEach(function(el){
+// this method is not efficient
+// this adds a callback function once to each of the three nav elements
+// what if there are many more? You'd be creating a copy of this callback for each nav element and will impact performance
+/*document.querySelectorAll('.nav__link').forEach(function(el){
   el.addEventListener('click', function(e){
     e.preventDefault();
     const id = this.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   });
+});
+*/
+
+// event delegation - use the fact that events bubble up the DOM
+// 1. add event listener to common parent element
+// 2. determine what element originated the event
+document.querySelector('.nav__links').addEventListener('click', function(e){
+  e.preventDefault();
+  //matching strategy
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
 });
 
 
