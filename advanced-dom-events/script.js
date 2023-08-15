@@ -1,4 +1,5 @@
 "use strict";
+//TODO: add hamburger menu, make page responsive
 
 ///////////////////////////////////////
 // Modal window
@@ -6,6 +7,9 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+
+// Header
+const header = document.querySelector(".header");
 
 // Navigation
 const nav = document.querySelector(".nav");
@@ -122,6 +126,53 @@ const handleHover = function (e) {
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
 
+// Sticky navigation
+// this way is not performant, esp on older devices b/c the event listener will be constantly running as the user scrolls
+/* 
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords);
+window.addEventListener("scroll", function (e) {
+  //console.log(window.scrollY);
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add("sticky");
+  } else {
+    nav.classList.remove("sticky");
+  }
+});
+*/
+
+// Sticky navigation: Intersection Observer API
+// function gets run whether we're going up or down the page
+/*const obsCallback = function (entries, observer) {
+  entries.forEach((entry) => {
+    console.log(entry);
+  });
+};
+
+const obsOptions = {
+  root: null, // the element that the target is intersecting, you can select an element or you can write null and then we can observe our target element intersecting the entire viewport
+  threshold: [0, 0.2], //10%, percentage of intersection at which the observer callback will be called, can have multiple thresholds, 0% means our callback will trigger each time the target element moves completely out of view and as soon as it enters and when it moves out of view. If you specified 1, the callback will only be called when 100% of the target is visible in the viewport (section is too big to fit into the viewport)
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1); //target
+*/
+const navHeight = nav.getBoundingClientRect().height;
+console.log(navHeight);
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0, //header will become sticky only when header is completely out of view
+  rootMargin: `-${navHeight}px`, //is a box of 90px that will be applied outside of our target element, rem doesn't work
+});
+headerObserver.observe(header);
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -131,7 +182,7 @@ nav.addEventListener("mouseout", handleHover.bind(1));
 console.log(document.head);
 console.log(document.body); */
 
-const header = document.querySelector(".header");
+//const header = document.querySelector(".header");
 
 // returns a node list, does not update on DOM change
 const allSections = document.querySelectorAll(".section");
