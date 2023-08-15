@@ -2,13 +2,18 @@
 
 ///////////////////////////////////////
 // Modal window
-
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+
+// Navigation
+const nav = document.querySelector(".nav");
 const btnScrollTo = document.querySelector(".btn--scroll-to");
 const section1 = document.querySelector("#section--1");
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
 ///////////////////////////////////////
 
 const openModal = function (e) {
@@ -34,14 +39,14 @@ document.addEventListener("keydown", function (e) {
 });
 
 //Button Scrolling
-btnScrollTo.addEventListener("click", function (e) {
-  const s1coords = section1.getBoundingClientRect();
+btnScrollTo.addEventListener("click", function () {
+  //const s1coords = section1.getBoundingClientRect();
   //old shool way
-  // window.scrollTo({
-  //   left: s1coords.left + window.scrollX,
-  //   top: s1coords.top + window.scrollY,
-  //   behavior: "smooth",
-  // });
+  //window.scrollTo({
+  //left: s1coords.left + window.scrollX,
+  //top: s1coords.top + window.scrollY,
+  //behavior: "smooth",
+  //});
 
   // new way
   section1.scrollIntoView({ behavior: "smooth" });
@@ -64,36 +69,58 @@ btnScrollTo.addEventListener("click", function (e) {
 // event delegation - use the fact that events bubble up the DOM
 // 1. add event listener to common parent element
 // 2. determine what element originated the event
-document.querySelector('.nav__links').addEventListener('click', function(e){
+document.querySelector(".nav__links").addEventListener("click", function (e) {
   e.preventDefault();
   //matching strategy
-  if(e.target.classList.contains('nav__link')){
-    const id = e.target.getAttribute('href');
+  if (e.target.classList.contains("nav__link")) {
+    const id = e.target.getAttribute("href");
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   }
 });
 
 // Tabbed component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
-tabsContainer.addEventListener('click', function(e){
-  const clicked = e.target.closest('.operations__tab');
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
 
   //guard clause, more modern than creating blocks
-  if(!clicked) return; 
+  if (!clicked) return;
 
   //remove active classes
-  tabs.forEach(t => t.classList.remove('operations__tab--active'));
-  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+  tabs.forEach((t) => t.classList.remove("operations__tab--active"));
+  tabsContent.forEach((c) => c.classList.remove("operations__content--active"));
 
   //activate tab
-  clicked.classList.add('operations__tab--active');
+  clicked.classList.add("operations__tab--active");
 
   //activate content area
-  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
 });
+
+// menu fade animation
+// mouseover and mouseenter are similar but mouseenter does not bubble
+// opposite events of mouseover and mouseenter, we use these to undo what we do on hover
+// opposite of mouseenter is mouseleave
+// opposite of mouseover is mouseout
+
+const handleHover = function (e) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector(".nav__logo");
+
+    siblings.forEach((el) => {
+      if (el !== link) el.style.opacity = this;
+    });
+
+    logo.style.opacity = this;
+  }
+};
+
+// Passing 'argument' into handler
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+nav.addEventListener("mouseout", handleHover.bind(1));
 
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -145,22 +172,22 @@ message.style.height =
 //document.documentElement.style.setProperty("--color-primary", "purple");
 
 //Attributes
-const logo = document.querySelector(".nav__logo");
-logo.alt = "Beautiful minimalist logo";
+//const logo = document.querySelector(".nav__logo");
+//logo.alt = "Beautiful minimalist logo";
 
 //non-standard
-logo.setAttribute("company", "Bankist");
+//logo.setAttribute("company", "Bankist");
 
-const link = document.querySelector(".nav__link--btn");
+//const link = document.querySelector(".nav__link--btn");
 
 // classes
-logo.classList.add("c", "j");
-logo.classList.remove("c", "j");
-logo.classList.toggle("c");
-logo.classList.contains("c"); // not includes like it is in arrays
+//logo.classList.add("c", "j");
+//logo.classList.remove("c", "j");
+//logo.classList.toggle("c");
+//logo.classList.contains("c"); // not includes like it is in arrays
 
 // don't use b/c will override current classes
-logo.className = "jonas";
+//logo.className = "jonas";
 
 /* 189. type of events and event handlers */
 /*
@@ -187,7 +214,8 @@ h1.onmouseenter = function(e){
 /* 191. event propagation in practice */
 // rgb(255, 255, 255)
 
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1 + min);
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1 + min);
 // random gives us a number between 0 and 1
 // if we multiply this number by max minus min, then we get a number between zero and max minus min
 // + 1 was added when using Math.trunc, because you'd never get a number at the max value, +1 was to offset the cutting off of the decimal. Not sure it's needed when using floor or ceil
