@@ -158,7 +158,6 @@ const observer = new IntersectionObserver(obsCallback, obsOptions);
 observer.observe(section1); //target
 */
 const navHeight = nav.getBoundingClientRect().height;
-console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
@@ -173,6 +172,30 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 headerObserver.observe(header);
 
+// reveal sections
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("section--hidden");
+  // since all section are revealed, unobserve, pass element that should be unobserved
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+//todo: write conditional to test is user just reloaded in the middle of the page
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
+});
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -185,7 +208,7 @@ console.log(document.body); */
 //const header = document.querySelector(".header");
 
 // returns a node list, does not update on DOM change
-const allSections = document.querySelectorAll(".section");
+//const allSections = document.querySelectorAll(".section");
 
 document.getElementById("section--1");
 
