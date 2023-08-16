@@ -472,3 +472,20 @@ console.log(h1.parentElement.children); //includes h1
   }
 })
 */
+
+/* Lifecycle DOM Events */
+document.addEventListener("DOMContentLoaded", function (e) {
+  console.log("HTML parsed and DOM Tree built!", e);
+});
+
+//images, css, ect has finished loading
+window.addEventListener("load", function (e) {
+  console.log("Page fully loaded", e);
+});
+
+// created before a user is about to leave a page
+/*window.addEventListener("beforeunload", function (e) {
+  e.preventDefault(); // some browsers require this
+  console.log(e);
+  e.returnValue = ""; // this creates a native browser popup and the message can't be changed
+});*/
