@@ -489,3 +489,13 @@ window.addEventListener("load", function (e) {
   console.log(e);
   e.returnValue = ""; // this creates a native browser popup and the message can't be changed
 });*/
+// should only be used when data is going to be lost if they leave the page
+
+// defer and async script loading
+/*
+- regular
+-- parse html, fetch script and execute, finish parsing HTML, DOMContentLoaded fires, never include the script in the head tag 
+- async, can be used in head. script is loaded at the same time that the html is parsed, then executed, finish parsing HTML, DOMContentLoaded fires. DomContentLoaded does not wait for an async script. a big script could slow things down. Best for 3rd party scripts that your code doens't interact with
+- defer, script is still loaded asychronously, but the execution of the script is deferred until the end of the hTML parsing, loading time is similar to async but the key difference would defer the HTML PARSING is never interrupted b/c the script is only executed at the end, DomContentLoaded event fires after defer script is executed, scripts executed in order. BEST SOLUTION, esp where order of execution is important
+- async and defer don't make sense in the body since the html has already loaded, only modern browsers support them,  these are HTML5
+*/
