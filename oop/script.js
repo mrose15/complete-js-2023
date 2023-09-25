@@ -36,8 +36,8 @@ Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear); //this keyword is set to the object that is calling the method
 };
 
-michele.calcAge();
-matilda.calcAge();
+//michele.calcAge();
+//matilda.calcAge();
 
 // special property to verify prototype
 //console.log(michele.__proto__);
@@ -106,9 +106,56 @@ Array.prototype.unique = function () {
   return [...new Set(this)];
 };
 
-console.log(arr.unique());
+//console.log(arr.unique());
 
 const h1 = document.querySelector("h1");
-console.dir(h1); //HTMLElement
+//console.dir(h1); //HTMLElement
 // huge prototype chain, 6 or 7 levels
-console.dir((x) => x + 1);
+//console.dir((x) => x + 1);
+
+//213. ES6 Classes
+// class expression
+// const PersonCl = class {}
+
+// class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // methods will be added to .prototype property of person class
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const jessica = new PersonCl("Jessica", 1985);
+console.log(jessica);
+jessica.calcAge();
+
+console.log(jessica.__proto__ === PersonCl.prototype); // true
+
+// same as adding function to class above
+// PersonCl.prototype.greet = function () {
+//   console.log(`Hey ${this.firstName}`);
+// };
+jessica.greet();
+
+/*
+1. Classes are not hoisted (function declarations are hoisted)
+2. Classes are first class citizens, can be passed into functions and can be returned from functions
+3. the body of a class is always executed in strict mode
+*/
+
+/* Which is better? Constructor functions or Classes
+- Constructor functions are not deprecated or old and are valid
+- This is more a question of personal preference
+- If you don't understand prototypal inheritance, don't use Classes
+- Some say Classes are bad in general and no one should use them b/c they hide the true nature of JS. 
+- Jonas says they're ok to use
+*/
