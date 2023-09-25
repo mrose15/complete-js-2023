@@ -30,7 +30,7 @@ const jack = new Person("Jack", 1975);
 //console.log(michele instanceof Person);
 
 // 209. Prototypes
-console.log(Person.prototype);
+//console.log(Person.prototype);
 // adding a method this way means now there's only one copy of this function. all objects that are created using the constructor function can reuse this function.
 Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear); //this keyword is set to the object that is calling the method
@@ -40,22 +40,22 @@ michele.calcAge();
 matilda.calcAge();
 
 // special property to verify prototype
-console.log(michele.__proto__);
-console.log(michele.__proto__ === Person.prototype); //true
+//console.log(michele.__proto__);
+//console.log(michele.__proto__ === Person.prototype); //true
 //Person.prototype is what's going to be used as the prototype of all the objects that are created with the person constructor function
 
 //console.log(Person.prototype.isPrototypeOf(michele));
 // person.prototype is the prototype of michele
 //console.log(Person.prototype.isPrototypeOf(matilda)); //true
-console.log(Person.prototype.isPrototypeOf(Person)); //false
+//console.log(Person.prototype.isPrototypeOf(Person)); //false
 // this confusion comes from bad naming of this property
 // could be thought of prototypeOfLinkedObjects instead of prototype
 
 Person.prototype.species = "Homo Sapiens";
-console.log(michele.species, matilda.species); //get access to species from prototype
+//console.log(michele.species, matilda.species); //get access to species from prototype
 
-console.log(michele.hasOwnProperty("firstName")); //true
-console.log(michele.hasOwnProperty("species")); //false
+//console.log(michele.hasOwnProperty("firstName")); //true
+//console.log(michele.hasOwnProperty("species")); //false
 // ^ false because this property is not really inside of the michele object
 
 //210. Prototypal Inheritance and the prototype chain
@@ -87,17 +87,17 @@ Similar to scope chain
 */
 
 // 211. Prototypal Inheritance on Built-In objects
-console.log(michele.__proto__); // Person
-console.log(michele.__proto__.__proto__); // Object
-console.log(michele.__proto__.__proto__.__proto__); //null
+//console.log(michele.__proto__); // Person
+//console.log(michele.__proto__.__proto__); // Object
+//console.log(michele.__proto__.__proto__.__proto__); //null
 
-console.dir(Person.prototype.constructor); // points to Person
+//console.dir(Person.prototype.constructor); // points to Person
 // any function is an object so therefore it has a prototype
 
 const arr = [3, 6, 6, 5, 6, 9, 3, 9]; // same as new Array
-console.log(arr.__proto__); // shows array methods
-console.log(arr.__proto__ === Array.prototype); //true
-console.log(arr.__proto__.__proto__); //Object
+//console.log(arr.__proto__); // shows array methods
+//console.log(arr.__proto__ === Array.prototype); //true
+//console.log(arr.__proto__.__proto__); //Object
 
 // all arrays will inherit this method
 // extending the prototype is not a good idea. if you're working on a small project it's ok. but don't do this b/c the next version of JS might add a method of the same name but it might work in a different way
