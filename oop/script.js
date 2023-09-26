@@ -124,7 +124,7 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
-  // methods will be added to .prototype property of person class
+  // instance methods will be added to .prototype property of person class
   calcAge() {
     console.log(2023 - this.birthYear);
   }
@@ -150,6 +150,12 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  //static method, not available on instances
+  static hey() {
+    console.log("Hey there 🌊 ");
+    console.log(this);
+  }
 }
 
 const jessica = new PersonCl("Jessica Davis", 1985);
@@ -167,6 +173,8 @@ jessica.greet();
 
 const walter = new PersonCl("Walter White", 1965);
 console.log(walter);
+
+PersonCl.hey();
 
 /*
 1. Classes are not hoisted (function declarations are hoisted)
@@ -205,3 +213,52 @@ const account = {
 console.log(account.latest);
 account.latest = 50;
 console.log(account.movements);
+
+// 215. Static methods
+// Array.from (example of static method) is attached to the entire Array constructor and not to their prototype property of the Array constructor. It's not on their prototype (Array)
+// all arrays do no inherit this method
+// We say the .from method is in the Array namespace, just like on Number.parseFloat()
+
+const Person2 = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear - birthYear;
+};
+
+Person2.hey = function () {
+  console.log("Hey there 🌊 ");
+  //whatever the object is calling the this keyword
+  console.log(this);
+};
+
+Person2.hey();
+// we can't call jonas.hey b/c it's not in the prototype of the jonas object, there's no way the jonas object could inherit it
+
+// 216. Object.create
+// still the ideal of prototypal inheritance, no new operator and no constructor function
+// least used way of implementing prototypal inheritance
+
+// creates prototype of all person objects
+const PersonProto = {
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = "Steven";
+steven.birthYear = 2002;
+steven.calcAge();
+
+console.log(steven.__proto__ === PersonProto); //true
+
+const sarah = Object.create(PersonProto);
+sarah.init("Sarah", 1990);
+sarah.calcAge();
+
+/* The big takeaweay is Object.create creates a new object, and the prototype of that object will be the object that we pass in.
+This is important to understand for true Class inheritance */
