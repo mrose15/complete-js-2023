@@ -126,11 +126,11 @@ class PersonCl {
 
   // instance methods will be added to .prototype property of person class
   calcAge() {
-    console.log(2023 - this.birthYear);
+    //console.log(2023 - this.birthYear);
   }
 
   greet() {
-    console.log(`Hey ${this.firstName}`);
+    //console.log(`Hey ${this.firstName}`);
   }
 
   // classes have getters and setters too
@@ -141,7 +141,7 @@ class PersonCl {
   //setters and getters are useful for data validation
   //set a property that already exists
   set fullName(name) {
-    console.log(name);
+    //console.log(name);
     //using fullName property causes error, max call stack size exceeded b/c we're using the name, convention is to use _ as prefix
     if (name.includes(" ")) this._fullName = name;
     else alert("not a full name");
@@ -159,22 +159,22 @@ class PersonCl {
 }
 
 const jessica = new PersonCl("Jessica Davis", 1985);
-console.log(jessica);
+//console.log(jessica);
 jessica.calcAge();
-console.log(jessica.age);
+//console.log(jessica.age);
 
-console.log(jessica.__proto__ === PersonCl.prototype); // true
+//console.log(jessica.__proto__ === PersonCl.prototype); // true
 
 // same as adding function to class above
 // PersonCl.prototype.greet = function () {
 //   console.log(`Hey ${this.firstName}`);
 // };
-jessica.greet();
+//jessica.greet();
 
 const walter = new PersonCl("Walter White", 1965);
-console.log(walter);
+//console.log(walter);
 
-PersonCl.hey();
+//PersonCl.hey();
 
 /*
 1. Classes are not hoisted (function declarations are hoisted)
@@ -210,9 +210,9 @@ const account = {
 };
 
 //used as property not a function
-console.log(account.latest);
+//console.log(account.latest);
 account.latest = 50;
-console.log(account.movements);
+//console.log(account.movements);
 
 // 215. Static methods
 // Array.from (example of static method) is attached to the entire Array constructor and not to their prototype property of the Array constructor. It's not on their prototype (Array)
@@ -225,9 +225,9 @@ const Person2 = function (firstName, birthYear) {
 };
 
 Person2.hey = function () {
-  console.log("Hey there 🌊 ");
+  //console.log("Hey there 🌊 ");
   //whatever the object is calling the this keyword
-  console.log(this);
+  //console.log(this);
 };
 
 Person2.hey();
@@ -240,7 +240,7 @@ Person2.hey();
 // creates prototype of all person objects
 const PersonProto = {
   calcAge() {
-    console.log(2023 - this.birthYear);
+    //console.log(2023 - this.birthYear);
   },
 
   init(firstName, birthYear) {
@@ -249,12 +249,12 @@ const PersonProto = {
   },
 };
 const steven = Object.create(PersonProto);
-console.log(steven);
+//console.log(steven);
 steven.name = "Steven";
 steven.birthYear = 2002;
 steven.calcAge();
 
-console.log(steven.__proto__ === PersonProto); //true
+//console.log(steven.__proto__ === PersonProto); //true
 
 const sarah = Object.create(PersonProto);
 sarah.init("Sarah", 1990);
@@ -262,3 +262,44 @@ sarah.calcAge();
 
 /* The big takeaweay is Object.create creates a new object, and the prototype of that object will be the object that we pass in.
 This is important to understand for true Class inheritance */
+
+// 218. Inheritance between classes: constructor functions
+const Person3 = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person3.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+// constructor function
+const Student = function (firstName, birthYear, course) {
+  // The call() method of Function instances calls this function with a given this value and arguments provided individually.
+  Person3.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+//Linking prototypes
+// a student is also a person, we want person and student to be connected. we want to make Person the prototype of Student
+//Object.create defines prototypes manually
+Student.prototype = Object.create(Person3.prototype); // at this point Student.prototype is empty
+
+//prototype
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student("Mike", 2020, "Computer Science");
+console.log(mike);
+mike.introduce();
+mike.calcAge(); // doing method look up here
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student); //true
+console.log(mike instanceof Person3); //true
+console.log(mike instanceof Object); //true
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
