@@ -274,7 +274,7 @@ Person3.prototype.calcAge = function () {
 };
 
 // constructor function
-const Student = function (firstName, birthYear, course) {
+/*const Student = function (firstName, birthYear, course) {
   // The call() method of Function instances calls this function with a given this value and arguments provided individually.
   Person3.call(this, firstName, birthYear);
   this.course = course;
@@ -303,3 +303,59 @@ console.log(mike instanceof Object); //true
 
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor);
+*/
+
+// 220. Inheritance between Classes: ES6 Classes
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    super(fullName, birthYear); // needs to happen first
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I feel more like ${
+        2037 - this.birthYear + 70
+      }`
+    );
+  }
+}
+
+const martha = new StudentCl("Martha Jones", 2012, "Medicine");
+martha.introduce();
+martha.calcAge();
+
+// 221. Inheritance between Classes: Object.create
+const PersonProto1 = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const rose = Object.create(PersonProto1);
+
+const StudentProto = Object.create(PersonProto1);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto1.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const donna = Object.create(StudentProto);
+donna.init("Donna", 2000, "Data Entry");
+donna.introduce();
+/* devs think this pattern is better than trying to fake classes in JS. Using Object.create, we're not faking classes, we just linking objects together. ES6 Classes and constructor functions are more used in the real world. You'll mostly see ES6 Classes */
