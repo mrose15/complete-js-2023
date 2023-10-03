@@ -356,6 +356,52 @@ StudentProto.introduce = function () {
 };
 
 const donna = Object.create(StudentProto);
-donna.init("Donna", 2000, "Data Entry");
-donna.introduce();
+//donna.init("Donna", 2000, "Data Entry");
+//donna.introduce();
 /* devs think this pattern is better than trying to fake classes in JS. Using Object.create, we're not faking classes, we just linking objects together. ES6 Classes and constructor functions are more used in the real world. You'll mostly see ES6 Classes */
+
+/* 222. Another Class Example */
+class Account {
+  constructor(owner, currency, pin, movements) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}!`);
+  }
+  //public interface
+  deposit(val) {
+    this.movements.push(val);
+  }
+
+  withdraw(val) {
+    //abstracted minus away from user
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    // for encapsulation and data privacy of approveLoan
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan approved");
+    }
+  }
+}
+
+const acc1 = new Account("Michele", "USD", 1111);
+console.log(acc1);
+
+//acc1.movements.push(250); //better to create methods
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+acc1.approveLoan(1000); //should not be allowed to access method. only requestLoadn should be able to access this method
+
+console.log(acc1);
+console.log(acc1.pin); // this is a security issue
