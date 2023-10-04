@@ -361,19 +361,31 @@ const donna = Object.create(StudentProto);
 /* devs think this pattern is better than trying to fake classes in JS. Using Object.create, we're not faking classes, we just linking objects together. ES6 Classes and constructor functions are more used in the real world. You'll mostly see ES6 Classes */
 
 /* 222. Another Class Example */
+
 class Account {
-  constructor(owner, currency, pin, movements) {
+  // 1) public fields (only on instances, not prototype), references able by the this keyword
+  locale = navigator.language;
+
+  // 2) private fields (cannot be referenced from the outside)
+  #movements = [];
+
+  constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
-    this.locale = navigator.language;
+    //protected property
+    this._pin = pin;
+    //this._movements = [];
+    //this.locale = navigator.language;
 
     console.log(`Thanks for opening an account, ${owner}!`);
   }
   //public interface
+  getMovements() {
+    return this.#movements;
+  }
+
   deposit(val) {
-    this.movements.push(val);
+    this.#movements.push(val);
   }
 
   withdraw(val) {
@@ -381,13 +393,14 @@ class Account {
     this.deposit(-val);
   }
 
-  approveLoan(val) {
+  // not part of public API
+  _approveLoan(val) {
     return true;
   }
 
   requestLoan(val) {
     // for encapsulation and data privacy of approveLoan
-    if (this.approveLoan(val)) {
+    if (this._approveLoan(val)) {
       this.deposit(val);
       console.log("Loan approved");
     }
@@ -397,11 +410,30 @@ class Account {
 const acc1 = new Account("Michele", "USD", 1111);
 console.log(acc1);
 
-//acc1.movements.push(250); //better to create methods
+//acc1.#movements.push(250); // this underscore is a flag to let dev team know that this property is not supposed to be touched outside of the class
 acc1.deposit(250);
 acc1.withdraw(140);
 acc1.requestLoan(1000);
-acc1.approveLoan(1000); //should not be allowed to access method. only requestLoadn should be able to access this method
+//acc1._approveLoan(1000); //should not be allowed to access method. only requestLoadn should be able to access this method
+console.log(acc1.getMovements());
 
 console.log(acc1);
-console.log(acc1.pin); // this is a security issue
+//console.log(acc1.pin); // this is a security issue
+
+/* 223. Encapsulation: Protection Properties and Methods */
+/* Encapsulation means to keep some properties and methods private inside the class
+so that they're not accessible from outside the class. The rest of the methods are exposed as a public interface (API)
+- adding an underscore to the movements does not make the property truly private because this is just a convention. just something devs agree to use
+*/
+
+/* 224. Encapsulation: Private Class Fields and Methods */
+/*
+JS is moving away from the idea that classes are just syntactic sugar over constructor functions. with this class fields, classes start to have abilities that they didn't have with constructor functions.
+
+4 different kinds of fields and methods ( actually 8)
+ - public fields, think of a field as a property that will be on all instances (public instance field)
+ - private fields
+ - public methods
+ - public fields
+
+*/
