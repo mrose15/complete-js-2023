@@ -389,11 +389,13 @@ class Account {
 
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
 
   withdraw(val) {
     //abstracted minus away from user
     this.deposit(-val);
+    return this;
   }
 
   // not part of public API
@@ -407,6 +409,7 @@ class Account {
     if (this._approveLoan(val)) {
       this.deposit(val);
       console.log("Loan approved");
+      return this;
     }
   }
 
@@ -452,11 +455,14 @@ JS is moving away from the idea that classes are just syntactic sugar over const
  - (there is also the static version)
 
  See class above
+ Account.helper();
 
 */
 // not supported yet in Google Chrome, sees as private class field
 //console.log(acc1.#approveLoan(100));
 
-Account.helper();
-
 /* 225. Chaining methods */
+// deposit method returns undefined because we're not returning anything explicitly, on call of 2nd deposit method, we're trying to call the deposit method on undefined
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+// adding return this to methods makes the method chainable
+console.log(acc1.getMovements());
