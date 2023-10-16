@@ -158,9 +158,12 @@ class EVCl extends CarCl {
   accelerate() {
     this.speed += 20;
     this.#charge--;
+    console.log(
+      `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}`
+    );
     return this;
   }
-
+  // public API w/o accessing the charge property
   chargeBattery(chargeTo) {
     this.#charge = chargeTo;
     console.log(
@@ -174,4 +177,14 @@ class EVCl extends CarCl {
 
 const riv = new EVCl("Rivian", 120, 23);
 console.log(riv);
-console.log(riv.accelerate().accelerate().break().chargeBattery(80));
+console.log(
+  riv
+    .accelerate()
+    .accelerate()
+    .accelerate()
+    .break()
+    .chargeBattery(80)
+    .accelerate()
+);
+
+console.log(riv.speedUS);
