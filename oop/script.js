@@ -363,22 +363,25 @@ const donna = Object.create(StudentProto);
 /* 222. Another Class Example */
 
 class Account {
-  // 1) public fields (only on instances, not prototype), references able by the this keyword
+  // 1) public fields (only on instances, not prototype), referenceable by the this keyword
   locale = navigator.language;
 
-  // 2) private fields (cannot be referenced from the outside)
+  // 2) private fields (cannot be referenced from the outside, use hash in new class proposal)
   #movements = [];
+  #pin; // create empty variable
 
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
     //protected property
-    this._pin = pin;
+    this.#pin = pin;
     //this._movements = [];
     //this.locale = navigator.language;
 
     console.log(`Thanks for opening an account, ${owner}!`);
   }
+
+  // 3) public methods
   //public interface
   getMovements() {
     return this.#movements;
@@ -394,16 +397,27 @@ class Account {
   }
 
   // not part of public API
-  _approveLoan(val) {
+  /*_approveLoan(val) {
     return true;
-  }
+  }*/
 
   requestLoan(val) {
     // for encapsulation and data privacy of approveLoan
+    //if (this.#approveLoan(val)) { at some point this will work
     if (this._approveLoan(val)) {
       this.deposit(val);
       console.log("Loan approved");
     }
+  }
+
+  static helper() {
+    console.log("Helper");
+  }
+
+  // 4) Private methods, no browser supports this
+  //#approveLoan(val) {
+  _approveLoan(val) {
+    return true;
   }
 }
 
@@ -414,11 +428,11 @@ console.log(acc1);
 acc1.deposit(250);
 acc1.withdraw(140);
 acc1.requestLoan(1000);
-//acc1._approveLoan(1000); //should not be allowed to access method. only requestLoadn should be able to access this method
+//acc1._approveLoan(1000); //should not be allowed to access method. only requestLoan should be able to access this method
 console.log(acc1.getMovements());
 
 console.log(acc1);
-//console.log(acc1.pin); // this is a security issue
+console.log(acc1); // this is a security issue
 
 /* 223. Encapsulation: Protection Properties and Methods */
 /* Encapsulation means to keep some properties and methods private inside the class
@@ -432,8 +446,17 @@ JS is moving away from the idea that classes are just syntactic sugar over const
 
 4 different kinds of fields and methods ( actually 8)
  - public fields, think of a field as a property that will be on all instances (public instance field)
- - private fields
+ - private fields (only chrome supports private class fields)
  - public methods
- - public fields
+ - private methods
+ - (there is also the static version)
+
+ See class above
 
 */
+// not supported yet in Google Chrome, sees as private class field
+//console.log(acc1.#approveLoan(100));
+
+Account.helper();
+
+/* 225. Chaining methods */
