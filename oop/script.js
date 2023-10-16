@@ -466,3 +466,10 @@ JS is moving away from the idea that classes are just syntactic sugar over const
 acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
 // adding return this to methods makes the method chainable
 console.log(acc1.getMovements());
+
+/* 226. ES6 Classes Summary 
+Classes are just syntactic sugar over constructor functions
+classes are not hoisted
+classes are first-class citizens
+class body is always executed in strict mode
+*/
