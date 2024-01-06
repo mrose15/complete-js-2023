@@ -1,5 +1,43 @@
 "use strict";
 
+class App {
+  constructor() {}
+  /*
+  Make sure to use encapsulation using _ for the following:
+    load page
+    receive position
+    click on map
+    change input
+    submit form
+  */
+}
+
+class Workout {
+  constructor(location, distance, time) {
+    this.location = location;
+    this.distance = distance;
+    this.time = time;
+  }
+}
+
+class Running extends Workout {
+  constructor() {
+    super(location, distance, time);
+  }
+  /*
+  running: pace, steps/minute (candence))
+  */
+}
+
+class Cycling extends Workout {
+  constructor() {
+    super(location, distance, time);
+  }
+  /*
+  cycling: speed and elevation gain
+  */
+}
+
 // prettier-ignore
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
