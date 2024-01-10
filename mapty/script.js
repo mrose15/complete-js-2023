@@ -40,6 +40,7 @@ class App {
 
     this.#map = L.map("map").setView(coords, 13);
 
+    //turn these into variables
     L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
