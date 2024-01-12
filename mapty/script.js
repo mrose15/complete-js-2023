@@ -57,6 +57,7 @@ class App {
   //private instance properties
   #map;
   #mapEvent;
+  #workouts = [];
 
   constructor() {
     this._getPosition();
@@ -106,32 +107,47 @@ class App {
     const validInputs = (...inputs) =>
       inputs.every((inp) => Number.isFinite(inp));
 
+    const allPositive = (...inputs) => inputs.every((inp) => inp > 0);
+
     e.preventDefault();
 
     // Get data from form
     const type = inputType.value;
     const distance = +inputDistance.value;
     const duration = +inputDuration.value;
+    const { lat, lng } = this.#mapEvent.latlng;
 
     // if workout running, create running object
     if (type === "running") {
       // Check if data is valid
       const cadence = +inputCadence.value;
       // guard clause, check for the opposite of what we want, if that is true then we return the function immediately
-      if (!validInputs(distance, duration, cadence))
-        return alert("Inputs have to be positive");
+      if (
+        !validInputs(distance, duration, cadence) ||
+        !allPositive(distance, duration, cadence)
+      )
+        return alert("Inputs have to be positive numbers!");
+
+      const workout = new Running([lat, lng], distance, duration, cadence);
+      this.#workouts.push(workout);
     }
 
     // if workout cycling, create cycling object
     if (type === "cycling") {
       const elevation = +inputElevation.value;
 
-      if (!validInputs(distance, duration, elevation))
-        return alert("Inputs have to be positive");
+      if (
+        !validInputs(distance, duration, elevation) ||
+        !allPositive(distance, duration)
+      )
+        return alert("Inputs have to be positive numbers!");
+
+      // create new Cycling object here
     }
+
     // Add new object to workout array
     // render workout on map as maker
-    const { lat, lng } = this.#mapEvent.latlng;
+
     L.marker([lat, lng])
       .addTo(this.#map)
       .bindPopup(
