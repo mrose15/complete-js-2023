@@ -142,7 +142,9 @@ class App {
       )
         return alert("Inputs have to be positive numbers!");
 
-      // create new Cycling object here
+      // create new Cycling object
+      const workout = new Cycling([lat, lng], distance, duration, elevation);
+      this.#workouts.push(workout);
     }
 
     // Add new object to workout array
