@@ -116,6 +116,7 @@ class App {
     const distance = +inputDistance.value;
     const duration = +inputDuration.value;
     const { lat, lng } = this.#mapEvent.latlng;
+    let workout;
 
     // if workout running, create running object
     if (type === "running") {
@@ -128,8 +129,7 @@ class App {
       )
         return alert("Inputs have to be positive numbers!");
 
-      const workout = new Running([lat, lng], distance, duration, cadence);
-      this.#workouts.push(workout);
+      workout = new Running([lat, lng], distance, duration, cadence);
     }
 
     // if workout cycling, create cycling object
@@ -143,11 +143,13 @@ class App {
         return alert("Inputs have to be positive numbers!");
 
       // create new Cycling object
-      const workout = new Cycling([lat, lng], distance, duration, elevation);
-      this.#workouts.push(workout);
+      workout = new Cycling([lat, lng], distance, duration, elevation);
     }
 
     // Add new object to workout array
+    this.#workouts.push(workout);
+    console.log(workout);
+
     // render workout on map as maker
 
     L.marker([lat, lng])
