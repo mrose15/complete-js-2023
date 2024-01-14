@@ -6,7 +6,7 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 class Workout {
   // if this app had thousands of users, it's likely that users would enter a workout at the same time, thus getting the same id
   // handle with library?
-  id = Date.now + "".slice(-10);
+  id = (Date.now() + "").slice(-10);
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
@@ -16,6 +16,7 @@ class Workout {
 }
 
 class Running extends Workout {
+  type = "running";
   constructor(coords, distance, duration, cadence) {
     super(coords, distance, duration);
     this.cadence = cadence;
@@ -30,6 +31,7 @@ class Running extends Workout {
 }
 
 class Cycling extends Workout {
+  type = "cycling";
   constructor(coords, distance, duration, elevationGain) {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
@@ -151,8 +153,20 @@ class App {
     console.log(workout);
 
     // render workout on map as maker
+    this.renderWorkoutMarker(workout);
 
-    L.marker([lat, lng])
+    // render new workout on list
+
+    // hide form and clear inputs
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        "";
+  }
+
+  renderWorkoutMarker(workout) {
+    L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -160,21 +174,11 @@ class App {
           minWidth: 100,
           autoClose: false,
           closeOnClick: false,
-          className: "running-popup",
+          className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent("Workout")
+      .setPopupContent(workout.type)
       .openPopup();
-
-    // render new workout on list
-    // hide form and clear inputs
-
-    //clear input fields
-    inputDistance.value =
-      inputDuration.value =
-      inputCadence.value =
-      inputElevation.value =
-        "";
   }
 }
 
