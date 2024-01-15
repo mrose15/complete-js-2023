@@ -153,9 +153,10 @@ class App {
     console.log(workout);
 
     // render workout on map as maker
-    this.renderWorkoutMarker(workout);
+    this._renderWorkoutMarker(workout);
 
     // render new workout on list
+    this._renderWorkout(workout);
 
     // hide form and clear inputs
     inputDistance.value =
@@ -165,7 +166,7 @@ class App {
         "";
   }
 
-  renderWorkoutMarker(workout) {
+  _renderWorkoutMarker(workout) {
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
@@ -180,6 +181,8 @@ class App {
       .setPopupContent(workout.type)
       .openPopup();
   }
+
+  _renderWorkout(workout) {}
 }
 
 const app = new App();
