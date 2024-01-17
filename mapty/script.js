@@ -43,7 +43,7 @@ class Cycling extends Workout {
   constructor(coords, distance, duration, elevationGain) {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
-    this.calcSpeed;
+    this.calcSpeed();
     this._setDescription();
   }
 
@@ -117,7 +117,9 @@ class App {
       inputElevation.value =
         "";
 
+    form.style.display = "none";
     form.classList.add("hidden");
+    setTimeout(() => (form.style.display = "grid"), 1000);
   }
 
   _toggleElevationField() {
@@ -193,7 +195,9 @@ class App {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(workout.type)
+      .setPopupContent(
+        `${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`
+      )
       .openPopup();
   }
 
@@ -215,7 +219,7 @@ class App {
         </div>
     `;
 
-    if (workout.type === "running")
+    if (workout.type === "running") {
       html += `<div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.pace.toFixed(1)}</span>
@@ -227,8 +231,9 @@ class App {
         <span class="workout__unit">spm</span>
       </div>
       </li>`;
+    }
 
-    if (workout.type === "cycling")
+    if (workout.type === "cycling") {
       html += `<div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.speed.toFixed(1)}</span>
@@ -240,6 +245,7 @@ class App {
         <span class="workout__unit">m</span>
       </div>
     </li>`;
+    }
 
     form.insertAdjacentHTML("afterend", html);
   }
