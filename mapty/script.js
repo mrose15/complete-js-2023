@@ -3,6 +3,7 @@
 class Workout {
   // if this app had thousands of users, it's likely that users would enter a workout at the same time, thus getting the same id
   // handle with library?
+  date = new Date();
   id = (Date.now() + "").slice(-10);
 
   constructor(coords, distance, duration) {
@@ -15,9 +16,9 @@ class Workout {
     // prettier-ignore
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    this.description = `${this.type[0].toUppercase()}${this.type.slice(1)} on ${
+    this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
-    }} ${this.date.getDate()}`;
+    } ${this.date.getDate()}`;
   }
 }
 
@@ -108,6 +109,17 @@ class App {
     inputDistance.focus();
   }
 
+  _hideForm() {
+    // Empty inputs
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        "";
+
+    form.classList.add("hidden");
+  }
+
   _toggleElevationField() {
     inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
     inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
@@ -158,7 +170,6 @@ class App {
 
     // Add new object to workout array
     this.#workouts.push(workout);
-    console.log(workout);
 
     // render workout on map as maker
     this._renderWorkoutMarker(workout);
@@ -167,11 +178,7 @@ class App {
     this._renderWorkout(workout);
 
     // hide form and clear inputs
-    inputDistance.value =
-      inputDuration.value =
-      inputCadence.value =
-      inputElevation.value =
-        "";
+    this._hideForm();
   }
 
   _renderWorkoutMarker(workout) {
@@ -193,7 +200,7 @@ class App {
   _renderWorkout(workout) {
     let html = `
       <li class="workout workout--${workout.type}" data-id="${workout.id}">
-      <h2 class="workout__title">{workout.description}</h2>
+      <h2 class="workout__title">${workout.description}</h2>
       <div class="workout__details">
         <span class="workout__icon">${
           workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"
@@ -233,6 +240,8 @@ class App {
         <span class="workout__unit">m</span>
       </div>
     </li>`;
+
+    form.insertAdjacentHTML("afterend", html);
   }
 }
 
