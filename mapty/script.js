@@ -71,22 +71,22 @@ class App {
   #workouts = [];
 
   constructor() {
-    this._getPosition();
+    this.#getPosition();
     form.addEventListener("submit", this._newWorkout.bind(this));
     inputType.addEventListener("change", this._toggleElevationField);
   }
 
-  _getPosition() {
+  #getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
-        this._loadMap.bind(this),
+        this.#loadMap.bind(this),
         function () {
           alert("Could not get your position");
         }
       );
   }
 
-  _loadMap(position) {
+  #loadMap(position) {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
