@@ -69,11 +69,13 @@ class App {
   #map;
   #mapEvent;
   #workouts = [];
+  #mapZoomLevel = 13;
 
   constructor() {
     this.#getPosition();
-    form.addEventListener("submit", this._newWorkout.bind(this));
-    inputType.addEventListener("change", this._toggleElevationField);
+    form.addEventListener("submit", this.#newWorkout.bind(this));
+    inputType.addEventListener("change", this.#toggleElevationField);
+    containerWorkouts.addEventListener("click", this.#moveToPopup.bind(this));
   }
 
   #getPosition() {
@@ -91,7 +93,7 @@ class App {
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
 
-    this.#map = L.map("map").setView(coords, 13);
+    this.#map = L.map("map").setView(coords, this.#mapZoomLevel);
 
     //turn these into variables
     L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
@@ -100,16 +102,16 @@ class App {
     }).addTo(this.#map);
 
     //handling clicks on map to show form
-    this.#map.on("click", this._showForm.bind(this));
+    this.#map.on("click", this.#showForm.bind(this));
   }
 
-  _showForm(mapE) {
+  #showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove("hidden");
     inputDistance.focus();
   }
 
-  _hideForm() {
+  #hideForm() {
     // Empty inputs
     inputDistance.value =
       inputDuration.value =
@@ -122,12 +124,12 @@ class App {
     setTimeout(() => (form.style.display = "grid"), 1000);
   }
 
-  _toggleElevationField() {
+  #toggleElevationField() {
     inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
     inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
   }
 
-  _newWorkout(e) {
+  #newWorkout(e) {
     const validInputs = (...inputs) =>
       inputs.every((inp) => Number.isFinite(inp));
 
@@ -174,16 +176,16 @@ class App {
     this.#workouts.push(workout);
 
     // render workout on map as maker
-    this._renderWorkoutMarker(workout);
+    this.#renderWorkoutMarker(workout);
 
     // render new workout on list
-    this._renderWorkout(workout);
+    this.#renderWorkout(workout);
 
     // hide form and clear inputs
-    this._hideForm();
+    this.#hideForm();
   }
 
-  _renderWorkoutMarker(workout) {
+  #renderWorkoutMarker(workout) {
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
@@ -201,7 +203,7 @@ class App {
       .openPopup();
   }
 
-  _renderWorkout(workout) {
+  #renderWorkout(workout) {
     let html = `
       <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
@@ -248,6 +250,25 @@ class App {
     }
 
     form.insertAdjacentHTML("afterend", html);
+  }
+
+  #moveToPopup(e) {
+    const workoutEl = e.target.closest(".workout");
+    console.log(workoutEl);
+
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(
+      (work) => work.id === workoutEl.dataset.id
+    );
+    console.log(workout);
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
   }
 }
 
