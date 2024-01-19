@@ -294,6 +294,16 @@ class App {
   #getLocalStorage() {
     const data = JSON.parse(localStorage.getItem("workouts"));
     console.log(data);
+
+    if (!data) return;
+
+    //restore data across page reloads
+    this.#workouts = data;
+
+    this.#workouts.forEach((work) => {
+      this.#renderWorkout(work);
+      this.#renderWorkoutMarker(work);
+    });
   }
 }
 
