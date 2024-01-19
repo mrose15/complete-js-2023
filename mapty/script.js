@@ -77,7 +77,13 @@ class App {
   #mapZoomLevel = 13;
 
   constructor() {
+    // Get user's position
     this.#getPosition();
+
+    // get data from local storage
+    this.#getLocalStorage();
+
+    //Attach event handlers
     form.addEventListener("submit", this.#newWorkout.bind(this));
     inputType.addEventListener("change", this.#toggleElevationField);
     containerWorkouts.addEventListener("click", this.#moveToPopup.bind(this));
@@ -188,6 +194,9 @@ class App {
 
     // hide form and clear inputs
     this.#hideForm();
+
+    // Set local storage to all workouts
+    this.#setLocalStorage();
   }
 
   #renderWorkoutMarker(workout) {
@@ -259,14 +268,12 @@ class App {
 
   #moveToPopup(e) {
     const workoutEl = e.target.closest(".workout");
-    console.log(workoutEl);
 
     if (!workoutEl) return;
 
     const workout = this.#workouts.find(
       (work) => work.id === workoutEl.dataset.id
     );
-    console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
@@ -277,6 +284,16 @@ class App {
 
     // using the public interface
     workout.click();
+  }
+
+  #setLocalStorage() {
+    //local storage is blocking so I wouldn't use local storage to store a large amount of data
+    localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+  }
+
+  #getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("workouts"));
+    console.log(data);
   }
 }
 
