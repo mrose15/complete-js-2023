@@ -287,7 +287,8 @@ class App {
     });
 
     // using the public interface
-    workout.click();
+    // objects coming from local storage will not inherit all the methods they did before
+    // workout.click();
   }
 
   #setLocalStorage() {
@@ -296,9 +297,9 @@ class App {
   }
 
   #getLocalStorage() {
-    //lost prototype chain, this is a problem when working with local storage and OOP
+    // lost prototype chain, this is a problem when working with local storage and OOP
+    // could loop over data and then restore the objects by creating a new object using the class
     const data = JSON.parse(localStorage.getItem("workouts"));
-    console.log(data);
 
     if (!data) return;
 
