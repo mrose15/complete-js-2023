@@ -114,6 +114,10 @@ class App {
 
     //handling clicks on map to show form
     this.#map.on("click", this.#showForm.bind(this));
+
+    this.#workouts.forEach((work) => {
+      this.#renderWorkoutMarker(work);
+    });
   }
 
   #showForm(mapE) {
@@ -292,6 +296,7 @@ class App {
   }
 
   #getLocalStorage() {
+    //lost prototype chain, this is a problem when working with local storage and OOP
     const data = JSON.parse(localStorage.getItem("workouts"));
     console.log(data);
 
@@ -302,7 +307,6 @@ class App {
 
     this.#workouts.forEach((work) => {
       this.#renderWorkout(work);
-      this.#renderWorkoutMarker(work);
     });
   }
 }
