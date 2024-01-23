@@ -1,4 +1,18 @@
 "use strict";
+/*
+TODOs:
+- Ability to edit a workout
+- Ability to delete a workout
+- Ability to delete all workouts
+- Ability to sort workouts by a certain field (eg: distance)
+- Re-build Running and Cycling objects coming from Local Storage. (Fix the problem where the running and cycling objects became regular objects after getting stored and retrieved from local storage)
+- More realistic error and confirmation messages
+- Ability to position the map to show all workouts
+- Ability to draw lines and shapes instead of just points
+- Geocode location from coordinates (eg: "Run in Faro, Portugal")
+- Display weather data for workout time and place (after async)
+
+*/
 
 class Workout {
   // if this app had thousands of users, it's likely that users would enter a workout at the same time, thus getting the same id
