@@ -318,6 +318,19 @@ class App {
 
     if (!data) return;
 
+    if (data.type === "running") {
+      Object.assign(new Running([lat, lng], distance, duration, cadence), data);
+    }
+
+    if (data.type === "cycling") {
+      Object.assign(
+        new Cycling([lat, lng], distance, duration, elevation),
+        data
+      );
+    }
+
+    console.log(data);
+
     //restore data across page reloads
     this.#workouts = data;
 
