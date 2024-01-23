@@ -1,6 +1,7 @@
 "use strict";
 /*
 TODOs:
+- handle workout id generation with library
 - Ability to edit a workout
 - Ability to delete a workout
 - Ability to delete all workouts
