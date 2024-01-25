@@ -318,16 +318,30 @@ class App {
 
     if (!data) return;
 
+    let workouts;
+
     if (data.type === "running") {
-      Object.assign(new Running([lat, lng], distance, duration, cadence), data);
+      workouts = new Running(
+        data.coords,
+        data.distance,
+        data.duration,
+        data.cadence
+      );
     }
 
     if (data.type === "cycling") {
-      Object.assign(
-        new Cycling([lat, lng], distance, duration, elevation),
-        data
+      workouts = new Cycling(
+        data.coords,
+        data.distance,
+        data.duration,
+        data.cadence
       );
     }
+
+    console.log(new Running([0, 0], 0, 0, 0));
+    console.log(new Cycling([0, 0], 0, 0, 0));
+
+    console.log(workouts);
 
     console.log(data);
 
