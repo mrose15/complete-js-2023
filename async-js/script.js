@@ -21,6 +21,7 @@ const getCountryData = function (country) {
         }
       }
     };
+    // Loop through languages (see currency)
 
     const html = `<article class="country">
   <img class="country__img" src="${data.flags.svg}" />
