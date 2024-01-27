@@ -15,13 +15,21 @@ const getCountryData = function (country) {
 
     const currency = () => {
       for (const currencyCode in data.currencies) {
-        if (data.currencies.hasOwn(currencyCode)) {
+        if (data.currencies.hasOwnProperty(currencyCode)) {
           const currencyInfo = data.currencies[currencyCode];
           return `<p class="country__row"><span>💰</span>${currencyInfo.name}</p>`;
         }
       }
     };
     // Loop through languages (see currency)
+    const language = () => {
+      for (const languages in data.languages) {
+        if (data.languages.hasOwnProperty(languages)) {
+          const languageInfo = data.languages[languages];
+          return `<p class="country__row"><span>🗣️</span>${languageInfo}</p>`;
+        }
+      }
+    };
 
     const html = `<article class="country">
   <img class="country__img" src="${data.flags.svg}" />
@@ -31,7 +39,7 @@ const getCountryData = function (country) {
     <p class="country__row"><span>👫</span>${(
       +data.population / 1000000
     ).toFixed(1)} million people</p>
-    <p class="country__row"><span>🗣️</span>${data.languages.por}</p>
+    ${language()}
     ${currency()}
   </div>
 </article>`;
