@@ -5,7 +5,7 @@ const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
 
-const renderCountry = function (data) {
+const renderCountry = function (data, className = '') {
   const currency = () => {
     for (const currencyCode in data.currencies) {
       if (data.currencies.hasOwnProperty(currencyCode)) {
@@ -24,7 +24,7 @@ const renderCountry = function (data) {
     }
   };
 
-  const html = `<article class="country">
+  const html = `<article class="country ${className}">
   <img class="country__img" src="${data.flags.svg}" />
   <div class="country__data">
     <h3 class="country__name">${data.name.common}</h3>
@@ -55,7 +55,25 @@ const getCountryAndNeighbor = function (country) {
     renderCountry(data);
 
     // Get neighbor country (2)
+    const neighbor = data.borders?.[0].toLowerCase();
+
+    if (!neighbor) return;
+
+    // AJAX call country 2
+    const request2 = new XMLHttpRequest();
+    request2.open(
+      'GET',
+      `https://restcountries.com/v3.1/alpha?codes=${neighbor}`
+    );
+    request2.send();
+
+    request2.addEventListener('load', function () {
+      const [data2] = JSON.parse(this.responseText);
+
+      renderCountry(data2, 'neighbor');
+    });
   });
 };
 
-getCountryAndNeighbor('portugal');
+//getCountryAndNeighbor('portugal');
+getCountryAndNeighbor('usa');
