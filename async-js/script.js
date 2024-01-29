@@ -77,3 +77,5 @@ const getCountryAndNeighbor = function (country) {
 
 //getCountryAndNeighbor('portugal');
 getCountryAndNeighbor('usa');
+
+// TODO: Work with promises and fetch API
