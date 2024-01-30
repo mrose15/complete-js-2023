@@ -4,7 +4,8 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
-
+//  OUR FIRST AJAX CALL: XMLHttpRequest
+/*
 const renderCountry = function (data, className = '') {
   const currency = () => {
     for (const currencyCode in data.currencies) {
@@ -78,4 +79,10 @@ const getCountryAndNeighbor = function (country) {
 //getCountryAndNeighbor('portugal');
 getCountryAndNeighbor('usa');
 
-// TODO: Work with promises and fetch API
+*/
+
+//const request = new XMLHttpRequest();
+//request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+//request.send();
+
+const request = fetch('https://restcountries.com/v3.1/name/portugal');
