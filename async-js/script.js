@@ -88,16 +88,14 @@ const getCountryData = function (country) {
     .then(data => {
       renderCountry(data[0]);
       const neighbor = data[0].borders?.[0];
-      console.log(`https://restcountries.com/v3.1/alpha/${neighbor}`);
-      console.log(data);
-      console.log(data[0].flags.svg);
+
       if (!neighbor) return; //will work on error handling later
 
       //Country 2
       return fetch(`https://restcountries.com/v3.1/alpha/${neighbor}`);
     })
     .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbor'));
+    .then(data => renderCountry(data[0], 'neighbor'));
 };
 
-getCountryData('germany');
+getCountryData('portugal');
