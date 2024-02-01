@@ -45,8 +45,8 @@ body {
   /* overflow: hidden; */
 }
 
-.neighbour::before {
-  content: 'Neighbour country';
+.neighbor::before {
+  content: 'Neighbor country';
   width: 100%;
   position: absolute;
   top: -4rem;
