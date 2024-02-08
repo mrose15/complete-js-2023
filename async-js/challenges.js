@@ -27,27 +27,66 @@ GOOD LUCK 😀
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
-const whereAmI = (lat, lng) => {
-  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('No such place!');
+const renderCountry = function (data, className = '') {
+  const currency = () => {
+    for (const currencyCode in data.currencies) {
+      if (data.currencies.hasOwnProperty(currencyCode)) {
+        const currencyInfo = data.currencies[currencyCode];
+        return `<p class="country__row"><span>💰</span>${currencyInfo.name}</p>`;
       }
-      return response.json();
+    }
+  };
+
+  const language = () => {
+    for (const languages in data.languages) {
+      if (data.languages.hasOwnProperty(languages)) {
+        const languageInfo = data.languages[languages];
+        return `<p class="country__row"><span>🗣️</span>${languageInfo}</p>`;
+      }
+    }
+  };
+
+  const html = `<article class="country ${className}">
+    <img class="country__img" src="${data.flags.svg}" />
+      <div class="country__data">
+        <h3 class="country__name">${data.name.common}</h3>
+        <h4 class="country__region">${data.region}</h4>
+        <p class="country__row"><span>👫</span>${(
+          +data.population / 1000000
+        ).toFixed(1)} million people</p>
+        ${language()}
+        ${currency()}
+      </div>
+    </article>`;
+
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  //countriesContainer.style.opacity = 1;
+};
+
+const whereAmI = function (lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(res => {
+      if (!res.ok) throw new Error('No such place!');
+      return res.json();
     })
     .then(data => {
       console.log(`You are in ${data.city}, ${data.country}`);
+
+      return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
     })
+    .then(res => {
+      if (!res.ok) throw new Error('Country not found ${res.status}');
+      return res.json();
+    })
+    .then(data => renderCountry(data[0]))
     .catch(err => {
-      countriesContainer.insertAdjacentText(
-        'beforeend',
-        `I'm sorry Hal, I can't do that because ${err.message}`
-      );
+      console.log(`I'm sorry Hal, I can't do that because ${err.message}`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
     });
 };
 
-btn.addEventListener('click', function () {
-  whereAmI('52.508', '13.381');
-  whereAmI('19.037', '72.873');
-  whereAmI('-33.933', '18.474');
-});
+whereAmI('52.508', '13.381');
+//whereAmI('19.037', '72.873');
+//whereAmI('-33.933', '18.474');
