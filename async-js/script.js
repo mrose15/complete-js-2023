@@ -158,7 +158,12 @@ btn.addEventListener('click', function () {
 });
 
 console.log('Test start'); //1
-setTimeout(() => console.log('0 sec timer'), 0); //3
+setTimeout(() => console.log('0 sec timer'), 0); //4
 //promise gets immediately resolved
-Promise.resolve('Resolved promise 1').then(res => console.log(res)); //4
+Promise.resolve('Resolved promise 1').then(res => console.log(res)); //3, b/c of microtasks queue
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 100; i++) {
+    console.log(res);
+  }
+});
 console.log('test end'); //2
