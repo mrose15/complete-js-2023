@@ -156,3 +156,9 @@ const getCountryData = function (country) {
 btn.addEventListener('click', function () {
   getCountryData('australia');
 });
+
+console.log('Test start'); //1
+setTimeout(() => console.log('0 sec timer'), 0); //3
+//promise gets immediately resolved
+Promise.resolve('Resolved promise 1').then(res => console.log(res)); //4
+console.log('test end'); //2
