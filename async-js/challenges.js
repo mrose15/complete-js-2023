@@ -60,7 +60,6 @@ const renderCountry = function (data, className = '') {
     </article>`;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  //countriesContainer.style.opacity = 1;
 };
 
 const whereAmI = function (lat, lng) {
@@ -88,5 +87,5 @@ const whereAmI = function (lat, lng) {
 };
 
 whereAmI('52.508', '13.381');
-//whereAmI('19.037', '72.873');
-//whereAmI('-33.933', '18.474');
+whereAmI('19.037', '72.873');
+whereAmI('-33.933', '18.474');
