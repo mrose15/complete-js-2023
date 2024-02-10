@@ -189,9 +189,17 @@ const wait = function (seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 };
 
-wait(2)
+wait(1)
   .then(() => {
-    console.log('I waited for 2 seconds');
+    console.log('1 second passed');
     return wait(1);
   })
-  .then(() => console.log('I waited for 1 second'));
+  .then(() => {
+    console.log('2 seconds passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 seconds passed');
+    return wait(1);
+  })
+  .then(() => console.log('4 seconds second'));
