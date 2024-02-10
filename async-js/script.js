@@ -171,11 +171,14 @@ btn.addEventListener('click', function () {
 // lottery promise
 const lotteryPromise = new Promise(function (resolve, reject) {
   //executor function
-  if (Math.random() >= 0.5) {
-    resolve('You WIN 💰');
-  } else {
-    reject('You lost your money 💩');
-  }
+  console.log('Lottery draw is happening 🔮');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN 💰');
+    } else {
+      reject(new Error('You lost your money 💩'));
+    }
+  }, 2000);
 });
 
 lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
