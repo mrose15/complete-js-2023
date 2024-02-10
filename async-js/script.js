@@ -167,3 +167,8 @@ Promise.resolve('Resolved promise 2').then(res => {
   }
 });
 console.log('test end'); //2
+
+// lottery promise
+const lotteryPromise = new Promise(function (resolve, reject) {
+  //executor function
+});
