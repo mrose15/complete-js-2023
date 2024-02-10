@@ -157,18 +157,25 @@ btn.addEventListener('click', function () {
   getCountryData('australia');
 });
 
-console.log('Test start'); //1
-setTimeout(() => console.log('0 sec timer'), 0); //4
+//console.log('Test start'); //1
+//setTimeout(() => console.log('0 sec timer'), 0); //4
 //promise gets immediately resolved
-Promise.resolve('Resolved promise 1').then(res => console.log(res)); //3, b/c of microtasks queue
-Promise.resolve('Resolved promise 2').then(res => {
+//Promise.resolve('Resolved promise 1').then(res => console.log(res)); //3, b/c of microtasks queue
+/*Promise.resolve('Resolved promise 2').then(res => {
   for (let i = 0; i < 100; i++) {
     console.log(res);
   }
-});
-console.log('test end'); //2
+});*/
+//console.log('test end'); //2
 
 // lottery promise
 const lotteryPromise = new Promise(function (resolve, reject) {
   //executor function
+  if (Math.random() >= 0.5) {
+    resolve('You WIN 💰');
+  } else {
+    reject('You lost your money 💩');
+  }
 });
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
