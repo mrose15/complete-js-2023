@@ -144,27 +144,28 @@ const createImage = function (imgPath) {
 // 4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImage promise to hide the current image. You will need a global variable for that 😉);
 // 5. After the second image has loaded, pause execution for 2 seconds again;
 // 6. After the 2 seconds have passed, hide the current image.
+
+let currentImg;
+
 createImage('img/img-1.jpg')
-  .then(() => {
+  .then(img => {
+    currentImg = img;
+    console.log('Image 1 loaded');
     return wait(2);
   })
   .then(() => {
-    newImg.style.display = 'none';
-    console.log('hidden image');
+    currentImg.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(img => {
+    currentImg = img;
+    console.log('Image 2 loaded');
     return wait(2);
   })
   .then(() => {
-    console.log('new image');
-    newImg.src = 'img/img-2.jpg';
-    newImg.style.display = 'block';
-    return wait(2);
+    currentImg.style.display = 'none';
   })
-  .then(() => {
-    newImg.style.display = 'none';
-    console.log('hidden image');
-    return wait(2);
-  })
-  .catch(err => console.log(`Image failed to load because ${err.message}`));
+  .catch(err => console.error(`Image failed to load because ${err.message}`));
 
 ///////////////////////////////////////
 // Coding Challenge #3
