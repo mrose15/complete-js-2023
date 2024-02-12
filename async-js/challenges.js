@@ -120,24 +120,21 @@ const wait = function (seconds) {
 };
 
 // part 1
-let newImg;
-//Create a function 'createImage' which receives imgPath as an input.
+const imagesContainer = document.querySelector('.images');
+
 const createImage = function (imgPath) {
-  //This function returns a promise
   return new Promise(function (resolve, reject) {
-    const imagesHolder = document.querySelector('.images');
+    const img = document.createElement('img');
+    img.src = imgPath;
 
-    //which creates a new image (use document.createElement('img'))
-    newImg = document.createElement('img');
+    img.addEventListener('load', function () {
+      imagesContainer.append(img);
+      resolve(img); //resolved value should be image
+    });
 
-    //sets the .src attribute to the provided image path.
-    newImg.src = imgPath;
-
-    //When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself.
-    resolve(imagesHolder.append(newImg));
-
-    //In case there is an error loading the image ('error' event), reject the promise.
-    reject(new Error(`image didn't load`));
+    img.addEventListener('error', function () {
+      reject(new Error(`Image not found`));
+    });
   });
 };
 
@@ -149,23 +146,23 @@ const createImage = function (imgPath) {
 // 6. After the 2 seconds have passed, hide the current image.
 createImage('img/img-1.jpg')
   .then(() => {
-    return wait(5);
+    return wait(2);
   })
   .then(() => {
     newImg.style.display = 'none';
     console.log('hidden image');
-    return wait(5);
+    return wait(2);
   })
   .then(() => {
     console.log('new image');
     newImg.src = 'img/img-2.jpg';
     newImg.style.display = 'block';
-    return wait(5);
+    return wait(2);
   })
   .then(() => {
     newImg.style.display = 'none';
     console.log('hidden image');
-    return wait(5);
+    return wait(2);
   })
   .catch(err => console.log(`Image failed to load because ${err.message}`));
 
