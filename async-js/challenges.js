@@ -115,6 +115,60 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
+const wait = function (seconds) {
+  return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+};
+
+// part 1
+let newImg;
+//Create a function 'createImage' which receives imgPath as an input.
+const createImage = function (imgPath) {
+  //This function returns a promise
+  return new Promise(function (resolve, reject) {
+    const imagesHolder = document.querySelector('.images');
+
+    //which creates a new image (use document.createElement('img'))
+    newImg = document.createElement('img');
+
+    //sets the .src attribute to the provided image path.
+    newImg.src = imgPath;
+
+    //When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself.
+    resolve(imagesHolder.append(newImg));
+
+    //In case there is an error loading the image ('error' event), reject the promise.
+    reject(new Error(`image didn't load`));
+  });
+};
+
+// PART 2
+// 2. Consume the promise using .then and also add an error handler;
+// 3. After the image has loaded, pause execution for 2 seconds using the wait function we created earlier;
+// 4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImage promise to hide the current image. You will need a global variable for that 😉);
+// 5. After the second image has loaded, pause execution for 2 seconds again;
+// 6. After the 2 seconds have passed, hide the current image.
+createImage('img/img-1.jpg')
+  .then(() => {
+    return wait(5);
+  })
+  .then(() => {
+    newImg.style.display = 'none';
+    console.log('hidden image');
+    return wait(5);
+  })
+  .then(() => {
+    console.log('new image');
+    newImg.src = 'img/img-2.jpg';
+    newImg.style.display = 'block';
+    return wait(5);
+  })
+  .then(() => {
+    newImg.style.display = 'none';
+    console.log('hidden image');
+    return wait(5);
+  })
+  .catch(err => console.log(`Image failed to load because ${err.message}`));
+
 ///////////////////////////////////////
 // Coding Challenge #3
 
