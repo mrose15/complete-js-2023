@@ -209,16 +209,16 @@ const getCountryData = function (country) {
 // Promise.reject(new Error('Problem!')).catch(x => console.error(x));
 
 //promisyfing the geoloction api
-const getPosition = function () {
-  return new Promise(function (resolve, reject) {
-    // navigator.geolocation.getCurrentPosition(
-    //   position => resolve(position),
-    //   err => reject(err)
-    // );
-    // same as above
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     // navigator.geolocation.getCurrentPosition(
+//     //   position => resolve(position),
+//     //   err => reject(err)
+//     // );
+//     // same as above
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
 
 //getPosition().then(pos => console.log(pos.coords.latitude));
 
@@ -254,13 +254,30 @@ const getPosition = function () {
 //btn.addEventListener('click', whereAmI);
 
 // async/await - syntatic sugar over then methods
-const whereAmI = async function (country) {
-  //fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
 
-  //same as above
-  const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+//fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
+const whereAmI = async function (country) {
+  //Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // Reverse geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  //Country data
+  const res = await fetch(
+    `https://restcountries.com/v3.1/name/${dataGeo.country}`
+  );
   const data = await res.json();
   renderCountry(data[0]);
+  countriesContainer.style.opacity = 1;
 };
-whereAmI('nigeria');
-console.log('FIRST');
+
+whereAmI();
