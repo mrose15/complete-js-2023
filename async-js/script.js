@@ -253,6 +253,14 @@ const getPosition = function () {
 
 //btn.addEventListener('click', whereAmI);
 
+// async/await - syntatic sugar over then methods
 const whereAmI = async function (country) {
-  await fetch(`https://restcountries.com/v3.1/name/${country}`);
+  //fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
+
+  //same as above
+  const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+  const data = await res.json();
+  renderCountry(data[0]);
 };
+whereAmI('nigeria');
+console.log('FIRST');
