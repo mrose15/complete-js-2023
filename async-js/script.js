@@ -222,33 +222,37 @@ const getPosition = function () {
 
 //getPosition().then(pos => console.log(pos.coords.latitude));
 
-const whereAmI = function () {
-  getPosition()
-    .then(pos => {
-      const { latitude: lat, longitude: lng } = pos.coords;
+// const whereAmI = function () {
+//   getPosition()
+//     .then(pos => {
+//       const { latitude: lat, longitude: lng } = pos.coords;
 
-      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('No such place!');
-      return res.json();
-    })
-    .then(data => {
-      console.log(`You are in ${data.city}, ${data.country}`);
+//       return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+//     })
+//     .then(res => {
+//       if (!res.ok) throw new Error('No such place!');
+//       return res.json();
+//     })
+//     .then(data => {
+//       console.log(`You are in ${data.city}, ${data.country}`);
 
-      return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('Country not found ${res.status}');
-      return res.json();
-    })
-    .then(data => renderCountry(data[0]))
-    .catch(err => {
-      console.log(`I'm sorry Hal, I can't do that because ${err.message}`);
-    })
-    .finally(() => {
-      countriesContainer.style.opacity = 1;
-    });
+//       return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
+//     })
+//     .then(res => {
+//       if (!res.ok) throw new Error('Country not found ${res.status}');
+//       return res.json();
+//     })
+//     .then(data => renderCountry(data[0]))
+//     .catch(err => {
+//       console.log(`I'm sorry Hal, I can't do that because ${err.message}`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
+//btn.addEventListener('click', whereAmI);
+
+const whereAmI = async function (country) {
+  await fetch(`https://restcountries.com/v3.1/name/${country}`);
 };
-
-btn.addEventListener('click', whereAmI);
