@@ -269,6 +269,9 @@ const whereAmI = async function (country) {
 
     // Reverse geocoding
     const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+
+    // in case of 403 error, needs to be done manually
+    if (!resGeo.ok) throw new Error('Problem getting location data');
     const dataGeo = await resGeo.json();
     console.log(dataGeo);
 
@@ -276,12 +279,15 @@ const whereAmI = async function (country) {
     const res = await fetch(
       `https://restcountries.com/v3.1/name/${dataGeo.country}`
     );
+    // in case of 403 error
+    if (!resGeo.ok) throw new Error('Problem getting country');
+
     const data = await res.json();
     renderCountry(data[0]);
     countriesContainer.style.opacity = 1;
   } catch (err) {
     console.error(`${err} 💣`);
-    renderError(`Something went wrong, 💣 ${err.message}`);
+    renderError(`💣 ${err.message}`);
   }
 };
 
