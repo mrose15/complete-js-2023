@@ -287,12 +287,19 @@ const whereAmI = async function (country) {
 
     return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
+    console.error(`${err} 💣`);
     renderError(`💣 ${err.message}`);
+
+    //Reject promise returned from async function
+    throw err;
   }
 };
 
 console.log('1: Will get location');
+
 // const city = whereAmI();
 // console.log(city);
-whereAmI().then(city => console.log(city));
-console.log('3: Finished Getting location');
+whereAmI()
+  .then(city => console.log(`2: ${city}`))
+  .catch(err => console.error(`2: ${err.message} 💣 `))
+  .finally(() => console.log('3: Finished Getting location'));
