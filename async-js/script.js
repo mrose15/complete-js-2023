@@ -273,7 +273,6 @@ const whereAmI = async function (country) {
     // in case of 403 error, needs to be done manually
     if (!resGeo.ok) throw new Error('Problem getting location data');
     const dataGeo = await resGeo.json();
-    console.log(dataGeo);
 
     //Country data
     const res = await fetch(
@@ -285,13 +284,14 @@ const whereAmI = async function (country) {
     const data = await res.json();
     renderCountry(data[0]);
     countriesContainer.style.opacity = 1;
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
-    console.error(`${err} 💣`);
     renderError(`💣 ${err.message}`);
   }
 };
 
-whereAmI();
-whereAmI();
-whereAmI();
-console.log('FIRST');
+console.log('1: Will get location');
+const city = whereAmI();
+console.log(city);
+console.log('3: Finished Getting location');
