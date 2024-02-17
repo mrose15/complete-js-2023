@@ -334,4 +334,32 @@ const get3Countries = async function (c1, c2, c3) {
   }
 };
 
-get3Countries('portugal', 'canada', 'tanzania');
+//get3Countries('portugal', 'canada', 'tanzania');
+
+// Other Promise Combinators
+// Promise.race - settled (value is available) as soon as 1 of the input promises settles, only one gets returned. It short circuits and returns a rejected promise when nothing can be returned
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v3.1/name/italy`),
+    getJSON(`https://restcountries.com/v3.1/name/egypt`),
+    getJSON(`https://restcountries.com/v3.1/name/mexico`),
+  ]);
+  //console.log(res[0]);
+})();
+
+//useful to prevent against never ending or long running promises (ie: bad internet connections)
+// Can create timeout promise which auto rejects after a specified time has passed
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('request too took long!'));
+    }, sec * 1000);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.com/v3.1/name/poland`),
+  timeout(1),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
