@@ -380,3 +380,14 @@ Promise.all([
 ])
   .then(res => console.log(res))
   .catch(err => console.log(err));
+
+//Promise.any - ES2021
+// takes in array of multiple promises and returns the first fullfilled promise (only returns the first successfull promise it finds). Ignores rejected promises.
+// Similar to Promise.race except rejected promises are ignored
+Promise.any([
+  Promise.resolve('Any Success'),
+  Promise.reject('Any ERROR'),
+  Promise.resolve('Any Another Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
