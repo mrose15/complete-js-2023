@@ -147,7 +147,7 @@ const createImage = function (imgPath) {
 
 let currentImg;
 
-createImage('img/img-1.jpg')
+/*createImage('img/img-1.jpg')
   .then(img => {
     currentImg = img;
     console.log('Image 1 loaded');
@@ -166,6 +166,7 @@ createImage('img/img-1.jpg')
     currentImg.style.display = 'none';
   })
   .catch(err => console.error(`Image failed to load because ${err.message}`));
+  */
 
 ///////////////////////////////////////
 // Coding Challenge #3
@@ -180,9 +181,35 @@ PART 2
 2. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
 3. Check out the 'imgs' array in the console! Is it like you expected?
 4. Use a promise combinator function to actually get the images from the array 😉
-5. Add the 'paralell' class to all the images (it has some CSS styles).
+5. Add the 'parallel' class to all the images (it has some CSS styles).
 
 TEST DATA: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. To test, turn off the 'loadNPause' function.
 
 GOOD LUCK 😀
 */
+
+let waiting;
+
+const loadNPause = async function () {
+  try {
+    const img = await createImage('img/img-1.jpg');
+    currentImg = img;
+    console.log('Image 1 loaded');
+    const wait1 = await wait(2);
+    waiting = wait1;
+
+    currentImg.style.display = 'none';
+    const img2 = await createImage('img/img-2.jpg');
+
+    currentImg = img2;
+    console.log('Image 2 loaded');
+    const wait2 = await wait(2);
+    waiting = wait2;
+
+    currentImg.style.display = 'none';
+  } catch (err) {
+    console.error(`Image failed to load because ${err.message}`);
+  }
+};
+
+loadNPause();
