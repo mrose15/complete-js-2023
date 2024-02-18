@@ -222,6 +222,7 @@ const getCountryData = function (country) {
 
 //getPosition().then(pos => console.log(pos.coords.latitude));
 
+//consuming promises
 // const whereAmI = function () {
 //   getPosition()
 //     .then(pos => {
@@ -260,6 +261,7 @@ const getPosition = function () {
   });
 };
 
+//consuming promises with async/await
 //fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
 const whereAmI = async function (country) {
   try {
