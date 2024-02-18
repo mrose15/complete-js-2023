@@ -212,4 +212,23 @@ const loadNPause = async function () {
   }
 };
 
-loadNPause();
+//loadNPause();
+
+const imgArr = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'];
+//createImage will return a Promise, so the callback function of the map method needs to be special
+//you need to consume the promise that comes from createImage
+const loadAll = async function (arr) {
+  //createImage needs to be consumed before it can be turned into map array?
+  const imgs = await Promise.all(arr);
+  console.log(imgs.map(item => createImage(item)));
+};
+loadAll(imgArr);
+
+/*
+PART 2
+-- 1. Create an async function 'loadAll' that receives an array of image paths 'imgArr';
+2. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
+3. Check out the 'imgs' array in the console! Is it like you expected?
+4. Use a promise combinator function to actually get the images from the array 😉
+5. Add the 'parallel' class to all the images (it has some CSS styles).
+*/
