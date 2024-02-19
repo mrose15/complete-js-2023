@@ -145,7 +145,7 @@ const createImage = function (imgPath) {
 // 5. After the second image has loaded, pause execution for 2 seconds again;
 // 6. After the 2 seconds have passed, hide the current image.
 
-let currentImg;
+//let currentImg;
 
 /*createImage('img/img-1.jpg')
   .then(img => {
@@ -188,31 +188,27 @@ TEST DATA: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. To test, turn of
 GOOD LUCK 😀
 */
 
-let waiting;
-
 const loadNPause = async function () {
   try {
-    const img = await createImage('img/img-1.jpg');
-    currentImg = img;
+    // Load img 1
+    let img = await createImage('img/img-1.jpg');
     console.log('Image 1 loaded');
-    const wait1 = await wait(2);
-    waiting = wait1;
+    //since the wait function doesn't have any resolved value we don't need to assign it to a variable
+    await wait(2);
+    img.style.display = 'none';
 
-    currentImg.style.display = 'none';
-    const img2 = await createImage('img/img-2.jpg');
-
-    currentImg = img2;
+    // Load img 2
+    img = await createImage('img/img-2.jpg');
     console.log('Image 2 loaded');
-    const wait2 = await wait(2);
-    waiting = wait2;
-
-    currentImg.style.display = 'none';
+    await wait(2);
+    img.style.display = 'none';
   } catch (err) {
+    // err is not necessary here which is new
     console.error(`Image failed to load because ${err.message}`);
   }
 };
 
-//loadNPause();
+loadNPause();
 
 const imgArr = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'];
 //createImage will return a Promise, so the callback function of the map method needs to be special
@@ -222,13 +218,4 @@ const loadAll = async function (arr) {
   const imgs = await Promise.all(arr.map(item => createImage(item)));
   imgs.forEach(item => item.classList.add('parallel'));
 };
-loadAll(imgArr);
-
-/*
-PART 2
--- 1. Create an async function 'loadAll' that receives an array of image paths 'imgArr';
--- 2. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
-3. Check out the 'imgs' array in the console! Is it like you expected?
-4. Use a promise combinator function to actually get the images from the array 😉
-5. Add the 'parallel' class to all the images (it has some CSS styles).
-*/
+//loadAll(imgArr);
