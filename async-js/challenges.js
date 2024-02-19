@@ -208,14 +208,28 @@ const loadNPause = async function () {
   }
 };
 
-loadNPause();
+//loadNPause();
 
-const imgArr = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'];
+//part 2
+//const imgArr = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'];
 //createImage will return a Promise, so the callback function of the map method needs to be special
 //you need to consume the promise that comes from createImage
-const loadAll = async function (arr) {
-  //createImage needs to be consumed before it can be turned into map array?
-  const imgs = await Promise.all(arr.map(item => createImage(item)));
-  imgs.forEach(item => item.classList.add('parallel'));
+// const loadAll = async function (arr) {
+//   //createImage needs to be consumed before it can be turned into map array?
+//   const imgs = await Promise.all(arr.map(item => createImage(item)));
+//   imgs.forEach(item => item.classList.add('parallel'));
+// };
+// loadAll(imgArr);
+
+const loadAll = async function (imgArr) {
+  try {
+    const imgs = imgArr.map(async img => await createImage(img));
+    const imgsEl = await Promise.all(imgs);
+    imgsEl.forEach(img => img.classList.add('parallel'));
+  } catch (err) {
+    console.error(err);
+  }
 };
-//loadAll(imgArr);
+const testData = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'];
+
+loadAll(testData);
