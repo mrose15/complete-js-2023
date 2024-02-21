@@ -23,3 +23,10 @@ add("bread", 2);
 add("apples", 2);
 
 console.log(cart);
+
+//can new use await keyword outside of an async function, or top level await, only works in modules
+const res = await fetch("https://jsonplaceholder.typicode.com/users/1/posts");
+const data = await res.json();
+console.log(data);
+
+//but this will block the execution of the entire module, which is not great
