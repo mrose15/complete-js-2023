@@ -7,22 +7,25 @@ console.log("Exporting module");
 // const res = await fetch("https://jsonplaceholder.typicode.com/users/1/users");
 // console.log("Finish fetching users");
 
-const shippingCost = 10;
-export const cart = [];
+// const shippingCost = 10;
+// export const cart = [];
 
-//exports need to happen in top level code
-export const addToCart = function (product, quantity) {
-  cart.push({ product, quantity });
-  console.log(`${quantity} ${product} added to cart`);
-};
+// //exports need to happen in top level code
+// export const addToCart = function (product, quantity) {
+//   cart.push({ product, quantity });
+//   console.log(`${quantity} ${product} added to cart`);
+// };
 
-const totalPrice = 237;
-const totalQuantity = 23;
+// const totalPrice = 237;
+// const totalQuantity = 23;
 
-export { totalPrice, totalQuantity as qty };
+// export { totalPrice, totalQuantity as qty };
 
-// export default, kinda like anon function
-export default function (product, quantity) {
-  cart.push({ product, quantity });
-  console.log(`${quantity} ${product} added to cart`);
-}
+// // export default, kinda like anon function
+// export default function (product, quantity) {
+//   cart.push({ product, quantity });
+//   console.log(`${quantity} ${product} added to cart`);
+// }
+
+//encapsulate data with functions
+(function () {})();
