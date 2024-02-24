@@ -60,7 +60,9 @@ const ShoppingCart2 = (function () {
 
   const addToCart = function (product, quantity) {
     cart.push({ product, quantity });
-    console.log(`${quantity} ${product} added to cart`);
+    console.log(
+      `${quantity} ${product} added to cart (shipping cost is ${shippingCost})`
+    );
   };
 
   const orderStock = function (product, quantity) {
@@ -82,3 +84,5 @@ ShoppingCart2.addToCart("pizza", 2);
 console.log(ShoppingCart2);
 console.log(ShoppingCart2.shippingCost); //won't work because this is not being returned
 // the above works due to closures
+// if we want 1 module per file, we'd have to create different scripts and link all of them in the HTML file. This 1) creates ordering problems 2) all vars in global scope 3) can't use module bundler
+// this is why native modules were added to ES6
