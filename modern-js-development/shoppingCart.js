@@ -26,6 +26,3 @@ console.log("Exporting module");
 //   cart.push({ product, quantity });
 //   console.log(`${quantity} ${product} added to cart`);
 // }
-
-//encapsulate data with functions
-(function () {})();
