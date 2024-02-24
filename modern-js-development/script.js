@@ -86,3 +86,15 @@ console.log(ShoppingCart2.shippingCost); //won't work because this is not being 
 // the above works due to closures
 // if we want 1 module per file, we'd have to create different scripts and link all of them in the HTML file. This 1) creates ordering problems 2) all vars in global scope 3) can't use module bundler
 // this is why native modules were added to ES6
+
+//CommonJS Modules
+//Export
+// export.addToCart = function (product, quantity) {
+//   cart.push({ product, quantity });
+//   console.log(
+//     `${quantity} ${product} added to cart (shipping cost is ${shippingCost})`
+//   );
+// };
+
+//Import
+// const {addToCart} = require('./shoppingCart.js');
