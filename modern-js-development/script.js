@@ -98,3 +98,15 @@ console.log(ShoppingCart2.shippingCost); //won't work because this is not being 
 
 //Import
 // const {addToCart} = require('./shoppingCart.js');
+
+//Intro to NPM
+import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
+const state = {
+  cart: [
+    { product: "bread", quantity: 5 },
+    { product: "pizza", quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+const stateClone = Object.assign({}, state);
+console.log(stateClone);
