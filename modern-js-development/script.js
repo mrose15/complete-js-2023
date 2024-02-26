@@ -108,5 +108,12 @@ const state = {
   ],
   user: { loggedIn: true },
 };
+
+//use Object.assign to create copy of object
 const stateClone = Object.assign({}, state);
+//lodash helps with cloning objects
+const stateDeepClone = cloneDeep(state);
+
+state.user.loggedIn = false;
 console.log(stateClone);
+console.log(stateDeepClone);
