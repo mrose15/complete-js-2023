@@ -113,7 +113,9 @@ const state = {
 const stateClone = Object.assign({}, state);
 //lodash helps with cloning objects
 const stateDeepClone = cloneDeep(state);
+const stateDeepClone2 = structuredClone(state);
 
 state.user.loggedIn = false;
 console.log(stateClone);
 console.log(stateDeepClone);
+console.log(stateDeepClone2);
