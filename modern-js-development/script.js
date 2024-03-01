@@ -1,3 +1,8 @@
+/*
+//////////////////////////////////
+// Exporting and Importing in ES6 Modules
+*/
+
 // Importing module
 // import {
 //   addToCart,
@@ -17,12 +22,12 @@
 
 // will import the default export, can be given any name we want
 //don't mix default and named exports, this is for test purposes only
-// import add, { cart } from "./shoppingCart.js";
-// add("pizza", 2);
+//import add, { cart } from "./shoppingCart.js";
+//add("pizza", 2);
 // add("bread", 2);
 // add("apples", 2);
 
-// console.log(cart);
+//console.log(cart);
 
 //can new use await keyword outside of an async function, or top level await, only works in modules
 // console.log("Start fetching");
@@ -52,37 +57,37 @@
 // console.log(lastPost2);
 
 //older module pattern, encapsulate data with functions
-const ShoppingCart2 = (function () {
-  const cart = [];
-  const shippingCost = 10;
-  const totalPrice = 237;
-  const totalQuantity = 23;
+// const ShoppingCart2 = (function () {
+//   const cart = [];
+//   const shippingCost = 10;
+//   const totalPrice = 237;
+//   const totalQuantity = 23;
 
-  const addToCart = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(
-      `${quantity} ${product} added to cart (shipping cost is ${shippingCost})`
-    );
-  };
+//   const addToCart = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(
+//       `${quantity} ${product} added to cart (shipping cost is ${shippingCost})`
+//     );
+//   };
 
-  const orderStock = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(`${quantity} ${product} ordered from supplier`);
-  };
+//   const orderStock = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(`${quantity} ${product} ordered from supplier`);
+//   };
 
-  return {
-    addToCart,
-    cart,
-    totalPrice,
-    totalQuantity,
-  };
-})();
+//   return {
+//     addToCart,
+//     cart,
+//     totalPrice,
+//     totalQuantity,
+//   };
+// })();
 
-ShoppingCart2.addToCart("apple", 4);
-ShoppingCart2.addToCart("pizza", 2);
+// ShoppingCart2.addToCart("apple", 4);
+// ShoppingCart2.addToCart("pizza", 2);
 
-console.log(ShoppingCart2);
-console.log(ShoppingCart2.shippingCost); //won't work because this is not being returned
+// console.log(ShoppingCart2);
+// console.log(ShoppingCart2.shippingCost); //won't work because this is not being returned
 // the above works due to closures
 // if we want 1 module per file, we'd have to create different scripts and link all of them in the HTML file. This 1) creates ordering problems 2) all vars in global scope 3) can't use module bundler
 // this is why native modules were added to ES6
@@ -119,3 +124,9 @@ state.user.loggedIn = false;
 console.log(stateClone);
 console.log(stateDeepClone);
 console.log(stateDeepClone2);
+
+//Building with Parcel and NPM Scripts
+//this is hot module reloading, the new modified bundle will get automatically injected into the broswer w/o a reload. Helps to maintain state
+if (module.hot) {
+  module.hot.accept();
+}
