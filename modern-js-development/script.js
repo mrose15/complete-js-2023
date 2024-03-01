@@ -105,7 +105,9 @@
 // const {addToCart} = require('./shoppingCart.js');
 
 //Intro to NPM
-import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
+//import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
+import cloneDeep from "lodash-es";
+
 const state = {
   cart: [
     { product: "bread", quantity: 5 },
@@ -118,12 +120,12 @@ const state = {
 const stateClone = Object.assign({}, state);
 //lodash helps with cloning objects
 const stateDeepClone = cloneDeep(state);
-const stateDeepClone2 = structuredClone(state);
+//const stateDeepClone2 = structuredClone(state);
 
 state.user.loggedIn = false;
 console.log(stateClone);
 console.log(stateDeepClone);
-console.log(stateDeepClone2);
+//console.log(stateDeepClone2);
 
 //Building with Parcel and NPM Scripts
 //this is hot module reloading, the new modified bundle will get automatically injected into the broswer w/o a reload. Helps to maintain state
