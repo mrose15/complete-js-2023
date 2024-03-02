@@ -588,11 +588,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 //////////////////////////////////
 // Exporting and Importing in ES6 Modules
 */ // Importing module
-// import {
-//   addToCart,
-//   totalPrice as price,
-//   qty,
-// } from "./shoppingCart.js";
+//import { addToCart, totalPrice as price, qty } from "./shoppingCart.js";
 // console.log("Importing module");
 // addToCart("bread", 5);
 // console.log(price, qty);
@@ -602,8 +598,8 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 // console.log(ShoppingCart.totalPrice);
 // will import the default export, can be given any name we want
 //don't mix default and named exports, this is for test purposes only
-//import add, { cart } from "./shoppingCart.js";
-//add("pizza", 2);
+// import add, { cart } from "./shoppingCart.js";
+// add("pizza", 2);
 // add("bread", 2);
 // add("apples", 2);
 //console.log(cart);
@@ -700,38 +696,17 @@ console.log(stateDeepClone);
 //Building with Parcel and NPM Scripts
 //this is hot module reloading, the new modified bundle will get automatically injected into the broswer w/o a reload. Helps to maintain state
 if (module.hot) module.hot.accept();
+class Person {
+    #greeting = "Hey";
+    constructor(name){
+        this.name = name;
+        console.log(`${this.#greeting}, ${this.name}`);
+    }
+}
+const michele = new Person("Michele");
+console.log("Michele" ?? null); //console.log(cart.find((el) => el.quantity >= 2));
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","lodash-es":"bXNwz"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"bXNwz":[function(require,module,exports) {
+},{"lodash-es":"bXNwz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bXNwz":[function(require,module,exports) {
 /**
  * @license
  * Lodash (Custom Build) <https://lodash.com/>
@@ -1854,7 +1829,37 @@ var global = arguments[3];
 var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 exports.default = freeGlobal;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ijXom":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"ijXom":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _symbolJs = require("./_Symbol.js");

@@ -8,7 +8,7 @@ console.log("Exporting module");
 // console.log("Finish fetching users");
 
 // const shippingCost = 10;
-// export const cart = [];
+export const cart = [];
 
 //exports need to happen in top level code
 export const addToCart = function (product, quantity) {

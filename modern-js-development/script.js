@@ -4,11 +4,7 @@
 */
 
 // Importing module
-// import {
-//   addToCart,
-//   totalPrice as price,
-//   qty,
-// } from "./shoppingCart.js";
+//import { addToCart, totalPrice as price, qty } from "./shoppingCart.js";
 
 // console.log("Importing module");
 
@@ -22,8 +18,8 @@
 
 // will import the default export, can be given any name we want
 //don't mix default and named exports, this is for test purposes only
-//import add, { cart } from "./shoppingCart.js";
-//add("pizza", 2);
+// import add, { cart } from "./shoppingCart.js";
+// add("pizza", 2);
 // add("bread", 2);
 // add("apples", 2);
 
@@ -132,3 +128,16 @@ console.log(stateDeepClone);
 if (module.hot) {
   module.hot.accept();
 }
+
+class Person {
+  #greeting = "Hey";
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.#greeting}, ${this.name}`);
+  }
+}
+
+const michele = new Person("Michele");
+
+console.log("Michele" ?? null);
+//console.log(cart.find((el) => el.quantity >= 2));
