@@ -141,3 +141,15 @@ const michele = new Person("Michele");
 
 console.log("Michele" ?? null);
 //console.log(cart.find((el) => el.quantity >= 2));
+
+Promise.resolve("TEST").then((x) => console.log(x));
+
+//import "core-js/stable";
+//if you want to cherry pick what ES6 feature you polyfill you can do this if you're concerned about bundle size
+import "core-js/stable/array/find";
+import "core-js/stable/promise";
+
+// Polyfilling async functions, not included in core-js/stable
+import "regenerator-runtime/runtime";
+
+// these imports are usually done that the top of the file but they are hoisted
