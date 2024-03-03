@@ -153,3 +153,21 @@ import "core-js/stable/promise";
 import "regenerator-runtime/runtime";
 
 // these imports are usually done that the top of the file but they are hoisted
+
+//clean and modern JS
+/*
+- make code readable
+-- others should understand it
+-- write code so that you can understand it in a year
+-- avoid over complicated solutions
+-- use descriptive variable name: what they contain
+-- use descriptive function namea: what they do
+*/
+
+/*
+- general best practices
+-- use dry principle (refactor your code)
+-- don't pollute global namespace, encapsulate instead
+-- don't use var
+-- use strong type checks (=== and !==)
+*/
