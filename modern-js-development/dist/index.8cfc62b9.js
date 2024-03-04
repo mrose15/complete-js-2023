@@ -685,6 +685,19 @@ var _runtime = require("regenerator-runtime/runtime"); // these imports are usua
 -- don't pollute global namespace, encapsulate instead
 -- don't use var
 -- use strong type checks (=== and !==)
+*/  /*
+- functions
+- should only do one thing
+- no more than 3 function params
+- use default params whenever possible
+- return same data type as received
+- arrow functions when they make code more readable, ie: callback functions of array methods
+*/  /*
+- OOP
+- use ES6 classes
+- encapsulate data and don't mutate it from outside the class ( you'll need to manipulate some data that's in th class but for that you should use a public API)
+- implement method chaining
+- do not use arrow functions as methods (in reg objects) b.c you won't get access to the this keyword
 */ 
 const state = {
     cart: [
