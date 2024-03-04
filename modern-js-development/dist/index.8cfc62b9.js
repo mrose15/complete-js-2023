@@ -687,17 +687,29 @@ var _runtime = require("regenerator-runtime/runtime"); // these imports are usua
 -- use strong type checks (=== and !==)
 */  /*
 - functions
-- should only do one thing
-- no more than 3 function params
-- use default params whenever possible
-- return same data type as received
-- arrow functions when they make code more readable, ie: callback functions of array methods
+-- should only do one thing
+-- no more than 3 function params
+-- use default params whenever possible
+-- return same data type as received
+-- arrow functions when they make code more readable, ie: callback functions of array methods
 */  /*
 - OOP
-- use ES6 classes
-- encapsulate data and don't mutate it from outside the class ( you'll need to manipulate some data that's in th class but for that you should use a public API)
-- implement method chaining
-- do not use arrow functions as methods (in reg objects) b.c you won't get access to the this keyword
+-- use ES6 classes
+-- encapsulate data and don't mutate it from outside the class ( you'll need to manipulate some data that's in th class but for that you should use a public API)
+-- implement method chaining
+-- do not use arrow functions as methods (in reg objects) b.c you won't get access to the this keyword
+*/  /*
+- avoid nested code
+-- use early return (guard clauses) in case some condition is not met
+-- user ternary or logical operators instead of if (ternary does not create a new code block but if does)
+-- use multiple if instead of if/else-if
+-- avoid for loops, user array methods instead, like map, filter and reduce
+-- avoid callback-based async APIs
+*/  /*
+- async code
+-- consume promises with async/await for best readability, instead of then and catch methods b/c these methods require callback functions, which introduces nested code
+-- whenever possible, run promises in parallel (Promise.all). When you have two Promises that do not depend on each other have them run parallel to make your app faster
+-- handle errors and promise rejections
 */ 
 const state = {
     cart: [
