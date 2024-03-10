@@ -21,7 +21,7 @@ const addExpense = function (value, description, user = "jonas") {
   const limit = spendingLimits?.[user] ?? 0;
 
   if (value <= limit) {
-    budget.push({ value: -value, description: description, user: user });
+    budget.push({ value: -value, description, user });
   }
 };
 addExpense(10, "Pizza 🍕");
