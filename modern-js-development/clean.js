@@ -9,7 +9,7 @@ const budget = [
   { value: -1800, description: "New Laptop 💻", user: "jonas" },
 ];
 
-const limits = {
+const spendingLimits = {
   jonas: 1500,
   matilda: 100,
 };
@@ -19,8 +19,8 @@ const addExpense = function (value, description, user) {
   user = user.toLowerCase();
 
   let lim;
-  if (limits[user]) {
-    lim = limits[user];
+  if (spendingLimits[user]) {
+    lim = spendingLimits[user];
   } else {
     lim = 0;
   }
@@ -37,8 +37,8 @@ console.log(budget);
 const check = function () {
   for (const el of budget) {
     let lim;
-    if (limits[el.user]) {
-      lim = limits[el.user];
+    if (spendingLimits[el.user]) {
+      lim = spendingLimits[el.user];
     } else {
       lim = 0;
     }
