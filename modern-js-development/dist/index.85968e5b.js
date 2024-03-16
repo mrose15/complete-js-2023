@@ -645,40 +645,43 @@ const spendingLimits = Object.freeze({
 //const limit = spendingLimits?.[user] ?? 0;
 const getLimit = (user)=>spendingLimits?.[user] ?? 0;
 //sometimes it's ok to have more than 2-3 params
+// this is now a pure function
 const addExpense = function(state, limits, value, description, user = "jonas") {
     // this is mutating the object
     user = user.toLowerCase();
     const cleanUser = user.toLowerCase();
-    if (value <= getLimit(cleanUser)) // b/c of freeze, this is now an impure function (ie: side effect)
-    // we should not mutate the original array
+    return value <= getLimit(cleanUser) ? // we should not mutate the original array
     // we'll need to make a copy and mutate the copy
     // budget.push({ value: -value, description, user: cleanUser });
     // [...] creates copy of state array
-    return [
+    [
         ...state,
         {
             value: -value,
             description,
             user: cleanUser
         }
-    ];
+    ] : state;
 };
 const newBudget1 = addExpense(budget, spendingLimits, 10, "Pizza \uD83C\uDF55");
-addExpense(budget, spendingLimits, 100, "Going to movies \uD83C\uDF7F", "Matilda");
-addExpense(budget, spendingLimits, 200, "Stuff", "Jay");
+const newBudget2 = addExpense(newBudget1, spendingLimits, 100, "Going to movies \uD83C\uDF7F", "Matilda");
+// jay is not allowed to add anything, no effect
+const newBudget3 = addExpense(newBudget2, spendingLimits, 200, "Stuff", "Jay");
+// would normally use currying for the above chaining Ie: composing
+// out of scope for this course?
 console.log(newBudget1);
+console.log(newBudget2);
+console.log(newBudget3);
 const checkExpenses = function() {
     for (const entry of budget)if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
 };
 checkExpenses();
-//console.log(budget);
 const logBigExpenses = function(bigLimit) {
     let output = "";
     for (const entry of budget)output += entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : "";
     output = output.slice(0, -2); // Remove last '/ '
     console.log(output);
 };
-console.log(budget);
 logBigExpenses(500);
 
 },{}]},["dyv3Y","9dcWr"], "9dcWr", "parcelRequirec1c1")
