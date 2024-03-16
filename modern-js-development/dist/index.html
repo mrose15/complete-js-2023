@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer="" src="/index.8cfc62b9.js"></script>
+    <!-- <script type="module" defer src="script.js"></script> -->
+    <script defer="" src="/index.85968e5b.js"></script>
     <title>Modern JavaScript Development: Modules and Tooling</title>
     <style>body {
   background: linear-gradient(to top left, #5017cb, #2e0550);
@@ -28,3 +29,42 @@ h1 {
     <h1>Modern JavaScript Development: Modules and Tooling</h1>
   </body>
 </html>
+
+<!--
+  Notes: 
+  - major shift to declarative and functional programing
+Two diff ways of writting codes (paradigms)
+- imperative
+  - programmer explains how to do things
+  - " explains every step is has to follow to achieve a result
+  const arr = [2,4,6,8];
+  const doubled = [];
+  for (let i=0; i < arr.length; i++)
+    doubled[i] = arr[i] * 2;
+- declarative
+  - programmer tells the computer "what to do"
+  - we describe the way the computer should achieve the result
+  - the how (step-by-step) gets abstracted away
+  const arr = [2,4,6,8];
+  const doubled = arr.map(n => n * 2);
+These can be mixed  
+
+Sub paradigm of the declarative paradigm called functional programming
+- based on the idea of writing software by combining many pure functions, avoiding side effects and mutating data
+- side effect - a modification (mutation) of any data outside of the function (mutating external variables), logging to the console, writing to DOM, etc)
+- pure function - function w/o side effects, does not depend on external variable. give the same inputs, always returns the same outputs.
+- we avoid mutating data by using immutability, original state (data) is never modified. instead, state is copied and the copy it mutated and returned. 
+- React/Redux are built on these principles. State is immutable in React 
+
+function programming techniques: 
+ - try to avoid data mutations
+ - use built in methods that don't produce side effects
+ - do data transofrmations with methods such as map , filter and reduce ( present in all functional programming languages )
+ - try to avoid side effects in functions, not always possible
+
+ declarative syntax: 
+ - use array and object descructuring as much as possible
+ - use the spread operator (...)
+ - use the ternary operator
+ - use template literals
+-->
