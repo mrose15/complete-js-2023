@@ -652,15 +652,21 @@ const addExpense = function(state, limits, value, description, user = "jonas") {
     if (value <= getLimit(cleanUser)) // b/c of freeze, this is now an impure function (ie: side effect)
     // we should not mutate the original array
     // we'll need to make a copy and mutate the copy
-    budget.push({
-        value: -value,
-        description,
-        user: cleanUser
-    });
+    // budget.push({ value: -value, description, user: cleanUser });
+    // [...] creates copy of state array
+    return [
+        ...state,
+        {
+            value: -value,
+            description,
+            user: cleanUser
+        }
+    ];
 };
-addExpense(budget, spendingLimits, 10, "Pizza \uD83C\uDF55");
+const newBudget1 = addExpense(budget, spendingLimits, 10, "Pizza \uD83C\uDF55");
 addExpense(budget, spendingLimits, 100, "Going to movies \uD83C\uDF7F", "Matilda");
 addExpense(budget, spendingLimits, 200, "Stuff", "Jay");
+console.log(newBudget1);
 const checkExpenses = function() {
     for (const entry of budget)if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
 };

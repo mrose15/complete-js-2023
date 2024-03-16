@@ -48,12 +48,17 @@ const addExpense = function (
     // b/c of freeze, this is now an impure function (ie: side effect)
     // we should not mutate the original array
     // we'll need to make a copy and mutate the copy
-    budget.push({ value: -value, description, user: cleanUser });
+    // budget.push({ value: -value, description, user: cleanUser });
+
+    // [...] creates copy of state array
+    return [...state, { value: -value, description, user: cleanUser }];
   }
 };
-addExpense(budget, spendingLimits, 10, "Pizza 🍕");
+const newBudget1 = addExpense(budget, spendingLimits, 10, "Pizza 🍕");
 addExpense(budget, spendingLimits, 100, "Going to movies 🍿", "Matilda");
 addExpense(budget, spendingLimits, 200, "Stuff", "Jay");
+
+console.log(newBudget1);
 
 const checkExpenses = function () {
   for (const entry of budget)
