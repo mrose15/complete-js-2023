@@ -643,14 +643,14 @@ const spendingLimits = Object.freeze({
 // alternative ways of getting limit
 //const limit = spendingLimits[user] ? spendingLimits[user] : 0;
 //const limit = spendingLimits?.[user] ?? 0;
-const getLimit = (user)=>spendingLimits?.[user] ?? 0;
+const getLimit = (limits, user)=>limits?.[user] ?? 0;
 //sometimes it's ok to have more than 2-3 params
 // this is now a pure function
 const addExpense = function(state, limits, value, description, user = "jonas") {
     // this is mutating the object
     user = user.toLowerCase();
     const cleanUser = user.toLowerCase();
-    return value <= getLimit(cleanUser) ? // we should not mutate the original array
+    return value <= getLimit(limits, cleanUser) ? // we should not mutate the original array
     // we'll need to make a copy and mutate the copy
     // budget.push({ value: -value, description, user: cleanUser });
     // [...] creates copy of state array
@@ -671,11 +671,20 @@ const newBudget3 = addExpense(newBudget2, spendingLimits, 200, "Stuff", "Jay");
 // out of scope for this course?
 console.log(newBudget1);
 console.log(newBudget2);
-console.log(newBudget3);
-const checkExpenses = function() {
-    for (const entry of budget)if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
+//data transformations fix
+const checkExpenses = function(state, limits) {
+    return state.map((entry)=>{
+        return entry.value < -getLimit(limits, entry.user) ? {
+            ...entry,
+            flag: "limit"
+        } : entry;
+    });
+// this for loop violates the principle of immutability
+// for (const entry of newBudget3)
+//   if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
 };
-checkExpenses();
+const finalBudget = checkExpenses(newBudget3, spendingLimits);
+console.log(finalBudget);
 const logBigExpenses = function(bigLimit) {
     let output = "";
     for (const entry of budget)output += entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : "";

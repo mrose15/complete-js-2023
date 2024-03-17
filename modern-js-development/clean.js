@@ -29,7 +29,7 @@ const spendingLimits = Object.freeze({
 // alternative ways of getting limit
 //const limit = spendingLimits[user] ? spendingLimits[user] : 0;
 //const limit = spendingLimits?.[user] ?? 0;
-const getLimit = (user) => spendingLimits?.[user] ?? 0;
+const getLimit = (limits, user) => limits?.[user] ?? 0;
 
 //sometimes it's ok to have more than 2-3 params
 // this is now a pure function
@@ -45,7 +45,7 @@ const addExpense = function (
 
   const cleanUser = user.toLowerCase();
 
-  return value <= getLimit(cleanUser)
+  return value <= getLimit(limits, cleanUser)
     ? // b/c of freeze, this push makes this now an impure function (ie: side effect)
       // we should not mutate the original array
       // we'll need to make a copy and mutate the copy
@@ -72,13 +72,20 @@ const newBudget3 = addExpense(newBudget2, spendingLimits, 200, "Stuff", "Jay");
 
 console.log(newBudget1);
 console.log(newBudget2);
-console.log(newBudget3);
 
-const checkExpenses = function () {
-  for (const entry of budget)
-    if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
+//data transformations fix
+const checkExpenses = function (state, limits) {
+  return state.map((entry) => {
+    return entry.value < -getLimit(limits, entry.user)
+      ? { ...entry, flag: "limit" }
+      : entry;
+  });
+  // this for loop violates the principle of immutability
+  // for (const entry of newBudget3)
+  //   if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
 };
-checkExpenses();
+const finalBudget = checkExpenses(newBudget3, spendingLimits);
+console.log(finalBudget);
 
 const logBigExpenses = function (bigLimit) {
   let output = "";
