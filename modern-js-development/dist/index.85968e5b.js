@@ -689,13 +689,26 @@ const checkExpenses = (state, limits)=>state.map((entry)=>entry.value < -getLimi
         } : entry);
 const finalBudget = checkExpenses(newBudget3, spendingLimits);
 console.log(finalBudget);
-const logBigExpenses = function(bigLimit) {
-    let output = "";
-    for (const entry of budget)output += entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : "";
-    output = output.slice(0, -2); // Remove last '/ '
-    console.log(output);
+// this let goes against spirit of immutability
+// in functional code you will likely never see the let variable
+// const logBigExpenses = function (bigLimit) {
+//   let output = "";
+//   for (const entry of budget) {
+//     output +=
+//       entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : "";
+//   }
+//   output = output.slice(0, -2); // Remove last '/ '
+//   console.log(output);
+// };
+// with immutability in mind
+const logBigExpenses = function(state, bigLimit) {
+    // filter array for big expenses and then for each item in the new array, create a string containing an emoji
+    const bigExpenses = state.filter((entry)=>entry.value <= -bigLimit).map((entry)=>entry.description.slice(-2)).join(" / ");
+    //advanced use case for reduce, can create strings using reduce
+    //.reduce((str, cur) => `${str} / ${cur.description.slice(-2)}`, "");
+    console.log(bigExpenses);
 };
-logBigExpenses(500);
+logBigExpenses(finalBudget, 500);
 
 },{}]},["dyv3Y","9dcWr"], "9dcWr", "parcelRequirec1c1")
 
