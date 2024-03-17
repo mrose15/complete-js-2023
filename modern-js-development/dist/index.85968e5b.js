@@ -701,6 +701,7 @@ console.log(finalBudget);
 //   console.log(output);
 // };
 // with immutability in mind
+// still impure due to console.log
 const logBigExpenses = function(state, bigLimit) {
     // filter array for big expenses and then for each item in the new array, create a string containing an emoji
     const bigExpenses = state.filter((entry)=>entry.value <= -bigLimit).map((entry)=>entry.description.slice(-2)).join(" / ");
