@@ -74,16 +74,25 @@ console.log(newBudget1);
 console.log(newBudget2);
 
 //data transformations fix
-const checkExpenses = function (state, limits) {
-  return state.map((entry) => {
-    return entry.value < -getLimit(limits, entry.user)
+// const checkExpenses2 = function (state, limits) {
+//   return state.map((entry) => {
+//     return entry.value < -getLimit(limits, entry.user)
+//       ? { ...entry, flag: "limit" }
+//       : entry;
+//   });
+//   // this for loop violates the principle of immutability
+//   // for (const entry of newBudget3)
+//   //   if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
+// };
+
+//same simplified function as above
+const checkExpenses = (state, limits) =>
+  state.map((entry) =>
+    entry.value < -getLimit(limits, entry.user)
       ? { ...entry, flag: "limit" }
-      : entry;
-  });
-  // this for loop violates the principle of immutability
-  // for (const entry of newBudget3)
-  //   if (entry.value < -getLimit(entry.user)) entry.flag = "limit";
-};
+      : entry
+  );
+
 const finalBudget = checkExpenses(newBudget3, spendingLimits);
 console.log(finalBudget);
 
