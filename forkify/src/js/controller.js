@@ -1,3 +1,5 @@
+import * as model from './model.js';
+
 import icons from 'url:../img/icons.svg';
 import 'core-js/stable'; //polyfil everything?
 import 'regenerator-runtime/runtime'; //polyfil async/await
@@ -33,9 +35,10 @@ const showRecipe = async function () {
     const id = window.location.hash.slice(1);
 
     if (!id) return;
+    renderSpinner(recipeContainer);
 
     // 1) loading recipe
-    renderSpinner(recipeContainer);
+    await model.loadRecipe(id);
 
     // 2) rendering recipe
     const markup = `
