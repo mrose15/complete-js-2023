@@ -614,7 +614,6 @@ const renderSpinner = function(parentEl) {
 const showRecipe = async function() {
     try {
         const id = window.location.hash.slice(1);
-        //console.log(id);
         if (!id) return;
         renderSpinner(recipeContainer);
         // 1) loading recipe
