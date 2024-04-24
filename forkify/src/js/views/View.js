@@ -3,10 +3,12 @@ import icons from 'url:../../img/icons.svg';
 export default class View {
   _parentElement = document.querySelector('.recipe');
   _data;
-  _errorMessage = 'We could not find that recipe. Please try another one!';
-  _message = '';
 
   render(data) {
+    // Check if there is no data OR if the data is an array and that array is empty, return the error
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+
     this._data = data;
     const markup = this._generateMarkup();
     this._clear();
