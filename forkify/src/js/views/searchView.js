@@ -2,7 +2,21 @@ class searchView {
   #parentElement = document.querySelector('.search');
 
   getQuery() {
-    return this.#parentElement.querySelector('.search_field').value;
+    const query = this.#parentElement.querySelector('.search__field').value;
+    this.#clearInput();
+    return query;
+  }
+
+  #clearInput() {
+    this.#parentElement.querySelector('.search__field').value = '';
+  }
+
+  addHandlerSearch(handler) {
+    this.#parentElement.addEventListener('submit', function (event) {
+      // prevent page reload
+      event.preventDefault();
+      handler();
+    });
   }
 }
 

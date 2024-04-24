@@ -1,7 +1,6 @@
 import { async } from 'regenerator-runtime';
 import { API_URL } from './config.js';
 import { getJSON } from './helpers.js';
-import recipeView from './views/recipeView.js';
 
 export const state = {
   recipe: {},
@@ -46,7 +45,6 @@ export const loadSearchResults = async function (query) {
         image: recipe.image_url,
       };
     });
-    console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 🤯 🤯 🤯`);
     throw err;
