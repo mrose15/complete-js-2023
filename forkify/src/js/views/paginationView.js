@@ -13,48 +13,36 @@ class PaginationView extends View {
 
     //Page 1, and there are additional pages
     if (currPage === 1 && numPages > 1) {
-      return `
-        <button class="btn--inline pagination__btn--next">
-            <span>Page ${currPage + 1}</span>
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-        </button> 
-        `;
+      return this._generateButton('next', currPage + 1);
     }
 
     // Last Page
     if (currPage === numPages && numPages > 1) {
-      return `
-        <button class="btn--inline pagination__btn--prev">
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-left"></use>
-            </svg>
-            <span>Page ${currPage - 1}</span>
-        </button>
-        `;
+      return this._generateButton('prev', currPage - 1);
     }
 
     // Other page
     if (currPage < numPages) {
-      return `
-        <button class="btn--inline pagination__btn--prev">
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-left"></use>
-            </svg>
-            <span>Page ${currPage - 1}</span>
-        </button>
-        <button class="btn--inline pagination__btn--next">
-            <span>Page ${currPage + 1}</span>
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-        </button> 
-        `;
+      return `${this._generateButton(
+        'prev',
+        currPage - 1
+      )}${this._generateButton('next', currPage + 1)}`;
     }
 
     // Page 1, and there are no other pages
-    return '';
+    return ``;
+  }
+
+  _generateButton(type, page) {
+    const btnClass = type === 'prev' ? 'prev' : 'next';
+    const icon = type === 'prev' ? 'left' : 'right';
+    return `
+      <button class="btn--inline pagination__btn--${btnClass}">
+        <svg class="search__icon">
+            <use href="${icons}#icon-arrow-${icon}"></use>
+        </svg>
+        <span>Page ${page}</span>
+      </button>`;
   }
 }
 
