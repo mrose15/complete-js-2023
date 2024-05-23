@@ -622,17 +622,24 @@ const controlSearchResults = async function() {
         await _modelJs.loadSearchResults(query);
         // 3) render results
         // resultsView.render(model.state.search.results);
-        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(6));
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage());
         // 4) Render initial pagination buttons
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     } catch (err) {
         console.log(err);
     }
 };
+const controlPagination = function(goToPage) {
+    // 1) render new results, render overrides anything previously there
+    (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(goToPage));
+    // 4) Render new pagination buttons
+    (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
+};
 const init = function() {
     //subscriber
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
+    (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
 };
 init();
 
@@ -3112,10 +3119,17 @@ var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class PaginationView extends (0, _viewJsDefault.default) {
     _parentElement = document.querySelector(".pagination");
+    addHandlerClick(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            const btn = e.target.closest(".btn--inline");
+            if (!btn) return;
+            const goToPage = +btn.dataset.goto;
+            handler(goToPage);
+        });
+    }
     _generateMarkup() {
         const currPage = this._data.page;
         const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-        console.log(`${numPages} pages`);
         //Page 1, and there are additional pages
         if (currPage === 1 && numPages > 1) return this._generateButton("next", currPage + 1);
         // Last Page
@@ -3129,7 +3143,7 @@ class PaginationView extends (0, _viewJsDefault.default) {
         const btnClass = type === "prev" ? "prev" : "next";
         const icon = type === "prev" ? "left" : "right";
         return `
-      <button class="btn--inline pagination__btn--${btnClass}">
+      <button data-goto="${page}" class="btn--inline pagination__btn--${btnClass}">
         <svg class="search__icon">
             <use href="${0, _iconsSvgDefault.default}#icon-arrow-${icon}"></use>
         </svg>
